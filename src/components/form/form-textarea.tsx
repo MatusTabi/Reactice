@@ -1,0 +1,37 @@
+'use client';
+
+import { useFormContext } from 'react-hook-form';
+
+import { Textarea } from '@/components/ui/textarea';
+
+type FormTextareaProps = {
+	label: string;
+	name: string;
+	placeholder?: string;
+};
+
+export const FormTextarea = ({ label, name, placeholder }: FormTextareaProps) => {
+	const {
+		register,
+		formState: { errors }
+	} = useFormContext();
+
+	const error = errors[name];
+
+	return (
+		<div className="flex flex-col gap-1">
+			<label htmlFor={name} className="text-sm font-medium text-gray-700">
+				{label}
+			</label>
+			<Textarea
+				id={name}
+				placeholder={placeholder}
+				rows={12}
+				{...register(name)}
+			/>
+			{error && (
+				<p className="text-sm text-red-500">{String(error.message)}</p>
+			)}
+		</div>
+	);
+};
