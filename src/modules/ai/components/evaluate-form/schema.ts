@@ -1,7 +1,7 @@
+import { z } from 'zod';
+
 import { evaluateRequestSchema } from '@/modules/ai/schema';
 
 export const evaluateFormSchema = evaluateRequestSchema;
 
-export type EvaluateFormValues = {
-	userCode: string;
-};
+export type EvaluateFormValues = z.infer<typeof evaluateFormSchema>;
