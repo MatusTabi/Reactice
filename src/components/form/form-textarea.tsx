@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 import { Textarea } from '@/components/ui/textarea';
 
@@ -16,24 +16,19 @@ export const FormTextarea = ({
 	placeholder
 }: FormTextareaProps) => {
 	const {
-		register,
-		formState: { errors }
-	} = useFormContext();
-
-	const error = errors[name];
+		field,
+		fieldState: { error }
+	} = useController({ name });
 
 	return (
 		<div className="flex flex-col gap-1">
 			<label htmlFor={name} className="text-sm font-medium text-gray-700">
 				{label}
 			</label>
-			<Textarea
-				id={name}
-				placeholder={placeholder}
-				rows={12}
-				{...register(name)}
-			/>
-			{error && <p className="text-sm text-red-500">{String(error.message)}</p>}
+			<Textarea id={name} placeholder={placeholder} rows={12} {...field} />
+			{error?.message && (
+				<p className="text-sm text-red-500">{error.message}</p>
+			)}
 		</div>
 	);
 };
