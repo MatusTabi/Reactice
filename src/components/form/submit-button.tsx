@@ -7,7 +7,10 @@ type SubmitButtonProps = {
 	label?: string;
 };
 
-export const SubmitButton = ({ isLoading, label = 'Submit' }: SubmitButtonProps) => (
+export const SubmitButton = ({
+	isLoading,
+	label = 'Submit'
+}: SubmitButtonProps) => (
 	<Button type="submit" disabled={isLoading}>
 		{isLoading ? (
 			<>

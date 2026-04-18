@@ -10,7 +10,11 @@ type FormTextareaProps = {
 	placeholder?: string;
 };
 
-export const FormTextarea = ({ label, name, placeholder }: FormTextareaProps) => {
+export const FormTextarea = ({
+	label,
+	name,
+	placeholder
+}: FormTextareaProps) => {
 	const {
 		register,
 		formState: { errors }
@@ -29,9 +33,7 @@ export const FormTextarea = ({ label, name, placeholder }: FormTextareaProps) =>
 				rows={12}
 				{...register(name)}
 			/>
-			{error && (
-				<p className="text-sm text-red-500">{String(error.message)}</p>
-			)}
+			{error && <p className="text-sm text-red-500">{String(error.message)}</p>}
 		</div>
 	);
 };

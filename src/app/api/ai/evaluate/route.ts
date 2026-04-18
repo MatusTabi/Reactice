@@ -8,7 +8,11 @@ import {
 } from '@/modules/ai/schema';
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const MODEL = 'google/gemma-4-26b-a4b-it:free';
+const MODELS = [
+	'google/gemma-4-26b-a4b-it:free',
+	'google/gemma-4-31b-it:free',
+	'nvidia/nemotron-3-super-120b-a12b:free'
+];
 
 const SYSTEM_PROMPT = `You are an expert React developer and UI evaluator.
 You will receive a React component submitted by a user.
@@ -36,21 +40,21 @@ export const POST = async (req: NextRequest) => {
 		const openRouterResponse = await fetch(OPENROUTER_API_URL, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${apiKey}`,
+				'Authorization': `Bearer ${apiKey}`,
 				'Content-Type': 'application/json',
 				'HTTP-Referer': 'https://reactice.vercel.app',
 				'X-OpenRouter-Title': 'Reactice'
 			},
 			body: JSON.stringify({
-				model: MODEL,
+				models: MODELS,
+				route: 'fallback',
 				messages: [
 					{ role: 'system', content: SYSTEM_PROMPT },
 					{
 						role: 'user',
 						content: `Evaluate this React component:\n\n${userCode}`
 					}
-				],
-				response_format: { type: 'json_object' }
+				]
 			})
 		});
 
@@ -74,7 +78,11 @@ export const POST = async (req: NextRequest) => {
 			);
 		}
 
-		const result = evaluationResultSchema.parse(JSON.parse(content));
+		const stripped = content
+			.replace(/^```(?:json)?\s*/i, '')
+			.replace(/\s*```$/, '')
+			.trim();
+		const result = evaluationResultSchema.parse(JSON.parse(stripped));
 
 		return Response.json(result);
 	} catch (error) {

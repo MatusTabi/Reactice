@@ -48,10 +48,14 @@ export const EvaluateForm = () => {
 			{mutation.data && (
 				<div className="flex flex-col gap-2 rounded-md border border-gray-200 bg-gray-50 p-4">
 					<p className="text-sm font-medium text-gray-700">
-						Score: <span className="font-bold text-gray-900">{mutation.data.score} / 100</span>
+						Score:{' '}
+						<span className="font-bold text-gray-900">
+							{mutation.data.score} / 100
+						</span>
 					</p>
 					<p className="text-sm text-gray-700">
-						Feedback: <span className="text-gray-900">{mutation.data.feedback}</span>
+						Feedback:{' '}
+						<span className="text-gray-900">{mutation.data.feedback}</span>
 					</p>
 				</div>
 			)}
