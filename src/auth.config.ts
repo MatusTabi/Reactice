@@ -6,20 +6,23 @@ import type { NextAuthConfig } from 'next-auth';
  * Providers are intentionally empty here; they are declared in src/auth.ts.
  */
 export const authConfig = {
+	trustHost: true,
 	providers: [],
 	pages: {
 		signIn: '/sign-in'
 	},
 	callbacks: {
 		authorized: ({ auth, request: { nextUrl } }) => {
+			const { pathname } = nextUrl;
 			const isLoggedIn = !!auth?.user;
-			const isOnApp = nextUrl.pathname.startsWith('/app');
+			const isAuthRoute = pathname === '/sign-in' || pathname === '/sign-up';
+			const isAuthApiRoute = pathname.startsWith('/api/auth');
 
-			if (isOnApp) {
-				return isLoggedIn;
+			if (isAuthApiRoute || isAuthRoute) {
+				return true;
 			}
 
-			return true;
+			return isLoggedIn;
 		}
 	}
 } satisfies NextAuthConfig;

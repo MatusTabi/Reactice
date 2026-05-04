@@ -11,9 +11,9 @@ export const { auth: middleware } = NextAuth(authConfig);
 export const config = {
 	/*
 	 * Match all routes except:
+	 *   - Auth.js API routes (/api/auth/*)
 	 *   - Next.js internals (_next/static, _next/image)
 	 *   - Static assets (favicon, images, fonts)
-	 *   - The sign-in page itself (to avoid redirect loops)
 	 */
-	matcher: ['/((?!_next/static|_next/image|favicon.ico|sign-in).*)']
+	matcher: ['/((?!api/auth|_next/static|_next/image|favicon.ico).*)']
 };
