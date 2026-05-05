@@ -16,9 +16,15 @@ export const Navbar = async () => {
 				<div className="flex items-center gap-4">
 					{session?.user ? (
 						<>
-							<div className="text-sm text-gray-700">
-								Logged in as <span className="font-semibold">{session.user.name || session.user.email}</span>
-							</div>
+							<Link
+								href="/app/profile"
+								className="text-sm text-gray-700 hover:text-gray-900"
+							>
+								Logged in as{' '}
+								<span className="font-semibold underline decoration-gray-300 underline-offset-4">
+									{session.user.name ?? session.user.email}
+								</span>
+							</Link>
 							<SignOutButton />
 						</>
 					) : (
