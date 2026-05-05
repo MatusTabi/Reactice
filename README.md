@@ -34,8 +34,3 @@ npm run lint
 npm run db:push
 npm run db:studio
 ```
-
-## Security
-
-- Do not commit `.env.local`.
-- Rotate any leaked secrets immediately.
