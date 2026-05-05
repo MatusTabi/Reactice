@@ -11,28 +11,6 @@ cp .env.local.example .env.local
 
 Fill `.env.local`:
 
-```env
-TURSO_DATABASE_URL="libsql://<your-db>.<region>.turso.io"
-TURSO_AUTH_TOKEN="<your-turso-token>"
-
-AUTH_SECRET="<your-auth-secret>"
-AUTH_GITHUB_ID="<your-github-client-id>"
-AUTH_GITHUB_SECRET="<your-github-client-secret>"
-
-OPENROUTER_API_KEY="<your-openrouter-key>"
-```
-
-Generate `AUTH_SECRET`:
-
-```bash
-npx auth secret
-```
-
-Set GitHub OAuth (local):
-
-- Homepage URL: http://localhost:3000
-- Authorization callback URL: http://localhost:3000/api/auth/callback/github
-
 Push schema:
 
 ```bash
