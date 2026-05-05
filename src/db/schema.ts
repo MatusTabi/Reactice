@@ -13,6 +13,7 @@ export const users = sqliteTable('user', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
+	seqId: integer('seq_id').unique(),
 	name: text('name'),
 	email: text('email').unique().notNull(),
 	emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),

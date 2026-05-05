@@ -19,7 +19,8 @@ const ProfilePage = async () => {
 			</div>
 			<div className="rounded-lg border bg-white p-4">
 				<p>
-					<span className="font-medium">Id:</span> {session.user.id}
+					<span className="font-medium">User #</span>
+					{session.user.seqId}
 				</p>
 				<p>
 					<span className="font-medium">Name:</span>{' '}
