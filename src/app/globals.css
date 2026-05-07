@@ -1,8 +1,14 @@
+@config "../../tailwind.config.ts";
 @import "tailwindcss";
 
 :root {
 	--background: #ffffff;
 	--foreground: #111827;
+
+	--color-surface: #10141a;
+	--color-on-surface: #dfe2eb;
+	--color-surface-container-heighest: #262a31;
+	--color-outline: #3d494d;
 }
 
 html,
