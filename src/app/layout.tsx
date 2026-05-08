@@ -23,9 +23,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
 		className={cn('font-sans antialiased', 'font-sans', inter.variable)}
 		suppressHydrationWarning
 	>
-		<body className="min-h-screen">
+		<body>
 			<Providers>
-				<div className="relative flex flex-col">
+				<div className="relative min-h-screen flex flex-col">
 					<Navbar />
 					<main className="flex-1">{children}</main>
 				</div>
