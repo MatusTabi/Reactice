@@ -1,7 +1,7 @@
 import CodeEditor from '@/components/dashboard/code/CodeEditor';
 
 const LearningDashboard = () => (
-	<main className="bg-surface h-screen pt-24">
+	<main className="bg-surface h-screen w-full">
 		<CodeEditor />
 	</main>
 );
