@@ -13,6 +13,8 @@ import ScriptAreaHeader from './ScriptAreaHeader';
 import { useDebouncedValue } from '@/hooks/use-debounced-value';
 import { useEvaluateMutation } from '@/modules/ai/hooks/api';
 import { Button } from '@/components/ui/button';
+import { Pill } from 'lucide-react';
+import Pills from '@/components/ui/pills';
 
 const draculaThemeWithCustomBackground = {
 	...dracula,
@@ -60,30 +62,7 @@ const ScriptAreaContent = () => {
 			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
 				<div className="flex min-h-0 flex-1 flex-col">
 					<ScriptAreaHeader title="Live Preview">
-						<div className="border-outline bg-surface-container-heighest flex items-center gap-1 rounded-full border p-1">
-							<button
-								type="button"
-								onClick={() => setPreviewTab('live')}
-								className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-									previewTab === 'live'
-										? 'bg-white text-black'
-										: 'text-on-surface hover:text-white'
-								}`}
-							>
-								Live Preview
-							</button>
-							<button
-								type="button"
-								onClick={() => setPreviewTab('target')}
-								className={`rounded-full px-3 py-1 text-xs font-medium transition ${
-									previewTab === 'target'
-										? 'bg-white text-black'
-										: 'text-on-surface hover:text-white'
-								}`}
-							>
-								Target Output
-							</button>
-						</div>
+						<Pills previewTab={previewTab} setPreviewTab={setPreviewTab} />
 					</ScriptAreaHeader>
 					<div className="relative min-h-0 flex-1">
 						<div
