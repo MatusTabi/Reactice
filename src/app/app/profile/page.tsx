@@ -16,7 +16,7 @@ const AppProfilePage = async () => {
 				<h1 className="text-2xl font-semibold">Profile</h1>
 				<SignOutButton />
 			</div>
-			<div className="rounded-lg border bg-white p-4">
+			<div className="bg-background rounded-lg border p-4">
 				<p>
 					<span className="font-medium">User #</span>
 					{session.user.seqId}

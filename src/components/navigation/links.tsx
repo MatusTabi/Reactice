@@ -34,7 +34,7 @@ const Links = () => {
 							className={cn(
 								'h-4 w-4 transition-all duration-300',
 								isActive
-									? 'text-primary scale-110'
+									? 'scale-110'
 									: 'group-hover:text-foreground group-hover:scale-110 group-hover:rotate-3'
 							)}
 						/>
