@@ -17,5 +17,3 @@ const Logo = () => (
 );
 
 export default Logo;
-
-// End of logo.tsx

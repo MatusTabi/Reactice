@@ -3,7 +3,7 @@ import { LogOut } from 'lucide-react';
 import { signOut } from '@/auth';
 import { Button } from '@/components/ui/button';
 
-export const SignOutButton = () => (
+const SignOutButton = () => (
 	<form
 		action={async () => {
 			'use server';
@@ -22,4 +22,4 @@ export const SignOutButton = () => (
 	</form>
 );
 
-// End of sign-out-button.tsx
+export default SignOutButton;

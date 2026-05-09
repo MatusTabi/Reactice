@@ -21,5 +21,3 @@ const Navbar = () => (
 );
 
 export default Navbar;
-
-// End of navbar.tsx

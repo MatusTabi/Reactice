@@ -35,5 +35,3 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
 );
 
 export default RootLayout;
-
-// End of layout.tsx

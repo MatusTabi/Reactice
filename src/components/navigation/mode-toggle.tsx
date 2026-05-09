@@ -1,5 +1,3 @@
-// Source based on: https://ui.shadcn.com/docs/dark-mode/next
-
 'use client';
 
 import { Moon, Sun } from 'lucide-react';
@@ -27,5 +25,3 @@ const ModeToggle = () => {
 };
 
 export default ModeToggle;
-
-// End of mode-toggle.tsx

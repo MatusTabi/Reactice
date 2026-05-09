@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { auth } from '@/auth';
-import { SignOutButton } from '@/components/auth/sign-out-button';
+import SignOutButton from '@/components/auth/sign-out-button';
 
 const AppProfilePage = async () => {
 	const session = await auth();
