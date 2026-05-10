@@ -8,7 +8,7 @@ type User = {
 };
 
 const UserRanks = ({ users }: { users: User[] }) => (
-	<div className="mx-auto flex w-full max-w-2xl flex-col gap-2 pt-10 pb-32 sm:pt-14">
+	<div className="mx-auto flex w-full max-w-2xl flex-col gap-2 pt-8 sm:pt-12">
 		{users.map(user => (
 			<div
 				key={user.rank}
@@ -50,7 +50,7 @@ const UserRanks = ({ users }: { users: User[] }) => (
 						{user.xp.toLocaleString()}
 					</span>
 
-					<span className="font-background text-muted-foreground mt-1 text-[10px] tracking-wide uppercase">
+					<span className="text-muted-foreground mt-1 text-[10px] font-bold tracking-wide uppercase">
 						XP
 					</span>
 				</div>
