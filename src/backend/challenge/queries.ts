@@ -6,7 +6,7 @@ import { type DifficultyType } from './schema';
 const getById = async (id: string) => {
 	const challenge = await db.query.challenges.findFirst({
 		where: (c, { eq }) => eq(c.id, id),
-		with: { creator: true }
+		with: { creator: true, files: true }
 	});
 
 	return challenge ? challengeMapper.toDetail(challenge) : null;
@@ -15,7 +15,7 @@ const getById = async (id: string) => {
 const getAll = async ({ difficulty }: { difficulty?: DifficultyType } = {}) => {
 	const allChallenges = await db.query.challenges.findMany({
 		where: difficulty ? (c, { eq }) => eq(c.difficulty, difficulty) : undefined,
-		with: { creator: true },
+		with: { creator: true, files: true },
 		orderBy: (c, { desc }) => desc(c.createdAt)
 	});
 

@@ -13,6 +13,7 @@ export const db = drizzle(client, { schema });
 // Tables
 export {
 	accounts,
+	challengeFiles,
 	challenges,
 	sessions,
 	submissions,
@@ -21,4 +22,10 @@ export {
 } from './schema';
 
 // Types
-export type { Challenge, NewUser, Submission, User } from './schema';
+export type {
+	Challenge,
+	ChallengeFile,
+	NewUser,
+	Submission,
+	User
+} from './schema';

@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 
-import { challenges, db } from '@/db';
+import { challengeFiles, challenges, db } from '@/db';
 
 import { type UserDetailType } from '../user/schema';
 
@@ -23,13 +23,13 @@ const create = async ({
 		throw new Error('You must be logged in to create a challenge');
 	}
 
-	const parsed = createChallengeSchema.parse(input);
+	const { files, ...challengeData } = createChallengeSchema.parse(input);
 
 	const [created] = await db
 		.insert(challenges)
 		.values({
-			...parsed,
-			referenceImageUrl: parsed.referenceImageUrl ?? null,
+			...challengeData,
+			referenceImageUrl: challengeData.referenceImageUrl ?? null,
 			creatorId: loggedInUser.id
 		})
 		.returning();
@@ -37,6 +37,10 @@ const create = async ({
 	if (!created) {
 		throw new Error('Failed to create challenge');
 	}
+
+	await db
+		.insert(challengeFiles)
+		.values(files.map(f => ({ ...f, challengeId: created.id })));
 
 	return challengeMapper.toBasic(created);
 };
@@ -52,8 +56,7 @@ const update = async ({
 		throw new Error('You must be logged in to update a challenge');
 	}
 
-	const parsed = updateChallengeSchema.parse(input);
-	const { id, ...data } = parsed;
+	const { id, files, ...data } = updateChallengeSchema.parse(input);
 
 	const existing = await db.query.challenges.findFirst({
 		where: (c, { eq: eqFn }) => eqFn(c.id, id)
@@ -75,6 +78,13 @@ const update = async ({
 
 	if (!updated) {
 		throw new Error('Failed to update challenge');
+	}
+
+	if (files) {
+		await db.delete(challengeFiles).where(eq(challengeFiles.challengeId, id));
+		await db
+			.insert(challengeFiles)
+			.values(files.map(f => ({ ...f, challengeId: id })));
 	}
 
 	return challengeMapper.toBasic(updated);
