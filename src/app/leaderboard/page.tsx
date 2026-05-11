@@ -1,46 +1,56 @@
+import { auth } from '@/auth';
+import { leaderboardQueries } from '@/backend/leaderboard/queries';
 import PersonalRank from '@/components/leaderboard/personal-rank';
 import Podium from '@/components/leaderboard/podium';
 import UserRanks from '@/components/leaderboard/user-ranks';
 import { cn } from '@/lib/cn';
 
-// TODO: Remove mock data with actual users.
-const topUsers = [
-	{ id: '1', name: 'Person 1', image: null, score: 98450 },
-	{ id: '2', name: 'Person 2', image: null, score: 82300 },
-	{ id: '3', name: 'Person 3', image: null, score: 75100 }
-];
+const LeaderboardPage = async () => {
+	const session = await auth();
+	const userId = session?.user?.id;
 
-const otherUsers = [
-	{ rank: 4, name: 'Person 4', xp: 67111 },
-	{ rank: 5, name: 'Person 5', xp: 55432, isCurrentUser: true },
-	{ rank: 6, name: 'Person 6', xp: 42000 },
-	{ rank: 7, name: 'Person 7', xp: 38123 },
-	{ rank: 8, name: 'Person 8', xp: 35123 },
-	{ rank: 9, name: 'Person 9', xp: 32123 },
-	{ rank: 10, name: 'Person 10', xp: 30123 }
-];
+	const topUsers = await leaderboardQueries.getTop();
 
-const LeaderboardPage = () => {
-	const isTop3 = topUsers.some(u => (u as any).isCurrentUser);
-	const isTop10 = otherUsers.some(u => u.isCurrentUser);
-	const isRanked = isTop3 || isTop10;
+	if (topUsers.length === 0) {
+		return (
+			<div className="flex flex-col items-center justify-center pt-16 sm:pt-22">
+				<h1 className="text-2xl font-black tracking-tighter uppercase italic sm:text-3xl md:text-4xl">
+					No rankings <span className="text-primary">yet</span>
+				</h1>
+				<p className="text-muted-foreground mt-2 text-base font-medium">
+					Submit your first challenge to claim the podium.
+				</p>
+			</div>
+		);
+	}
+
+	const userStats = userId
+		? await leaderboardQueries.getUserRank(userId)
+		: null;
+
+	const isTop10 = topUsers.slice(0, 10).some(u => u.id === userId);
+
+	const podiumUsers = topUsers.slice(0, 3);
+	const otherUsers = topUsers.slice(3, 10).map(u => ({
+		...u,
+		isCurrentUser: u.id === userId
+	}));
 
 	return (
 		<div
 			className={cn(
 				'mx-auto flex max-w-5xl flex-col items-center px-6 pt-16 sm:pt-22',
-				!isRanked && 'pb-40'
+				!isTop10 && userStats && 'pb-40'
 			)}
 		>
-			<Podium topUsers={topUsers} />
+			<Podium users={podiumUsers} />
 
-			<UserRanks users={otherUsers} />
+			{otherUsers.length > 0 && <UserRanks users={otherUsers} />}
 
-			{!isRanked && (
+			{!isTop10 && userStats && (
 				<>
 					<div className="from-background via-background/80 pointer-events-none fixed bottom-0 left-0 z-40 h-35 w-full bg-linear-to-t to-transparent" />
-					
-					<PersonalRank />
+					<PersonalRank rank={userStats.rank} xp={userStats.totalPoints} />
 				</>
 			)}
 		</div>

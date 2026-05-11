@@ -1,17 +1,22 @@
+import { User } from 'lucide-react';
+import Image from 'next/image';
+
+import { type LeaderboardEntryType } from '@/backend/leaderboard/schema';
 import { cn } from '@/lib/cn';
 
-type User = {
-	rank: number;
-	name: string;
-	xp: number;
+type RankedUser = LeaderboardEntryType & {
 	isCurrentUser?: boolean;
 };
 
-const UserRanks = ({ users }: { users: User[] }) => (
+type UserRanksProps = {
+	users: RankedUser[];
+};
+
+const UserRanks = ({ users }: UserRanksProps) => (
 	<div className="mx-auto flex w-full max-w-2xl flex-col gap-2 pt-8 sm:pt-12">
 		{users.map(user => (
 			<div
-				key={user.rank}
+				key={user.id}
 				className={cn(
 					'border-foreground/5 bg-foreground/2 group flex items-center justify-between rounded-xl border p-3 transition-all sm:p-4',
 					'hover:bg-foreground/5 hover:translate-x-1',
@@ -28,7 +33,19 @@ const UserRanks = ({ users }: { users: User[] }) => (
 						{user.rank}
 					</span>
 
-					<div className="bg-muted border-foreground/5 h-9 w-10 shrink-0 rounded-full border sm:h-10 sm:w-10" />
+					<div className="bg-muted border-foreground/5 relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border sm:h-10 sm:w-10">
+						{user.image ? (
+							<Image
+								fill
+								src={user.image}
+								alt={user.name ?? 'User'}
+								className="object-cover"
+								sizes="40px"
+							/>
+						) : (
+							<User className="text-muted-foreground h-5 w-5 sm:h-6 sm:w-6" />
+						)}
+					</div>
 
 					<span
 						className={cn(
@@ -36,7 +53,7 @@ const UserRanks = ({ users }: { users: User[] }) => (
 							user.isCurrentUser ? 'text-primary' : 'text-foreground/90'
 						)}
 					>
-						{user.name}
+						{user.name ?? 'Challenger'}
 					</span>
 				</div>
 
@@ -47,7 +64,7 @@ const UserRanks = ({ users }: { users: User[] }) => (
 							user.isCurrentUser ? 'text-primary' : 'text-foreground'
 						)}
 					>
-						{user.xp.toLocaleString()}
+						{user.totalPoints.toLocaleString()}
 					</span>
 
 					<span className="text-muted-foreground mt-1 text-[10px] font-bold tracking-wide uppercase">

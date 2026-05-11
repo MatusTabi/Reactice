@@ -1,20 +1,15 @@
 import { Crown } from 'lucide-react';
 
+import { type LeaderboardEntryType } from '@/backend/leaderboard/schema';
+
 import PodiumCircle from './podium-circle';
 
-type LeaderboardUser = {
-	id: string;
-	name: string;
-	image?: string | null;
-	score: number;
-};
-
 type PodiumProps = {
-	topUsers: LeaderboardUser[];
+	users: LeaderboardEntryType[];
 };
 
-const Podium = ({ topUsers }: PodiumProps) => {
-	const [first, second, third] = topUsers || [];
+const Podium = ({ users }: PodiumProps) => {
+	const [first, second, third] = users || [];
 
 	return (
 		<div className="grid w-full max-w-2xl grid-cols-3 items-end gap-x-2 sm:gap-x-6">
@@ -23,11 +18,13 @@ const Podium = ({ topUsers }: PodiumProps) => {
 
 				<div className="w-full text-center">
 					<p className="truncate px-1 text-sm font-bold">
-						{second?.name ?? 'Challenger'}
+						{second?.name ?? 'King'}
 					</p>
 
-					<span className="text-sm font-bold tracking-wider uppercase opacity-50">
-						#2
+					<span className="flex items-center justify-center gap-x-2 text-sm font-bold tracking-wider uppercase opacity-50">
+						<span>#2</span>
+						<span className="opacity-40">—</span>
+						<span>{second?.totalPoints.toLocaleString() ?? '0'} XP</span>
 					</span>
 				</div>
 			</div>
@@ -43,25 +40,28 @@ const Podium = ({ topUsers }: PodiumProps) => {
 
 				<div className="w-full text-center">
 					<p className="text-primary truncate px-1 text-base leading-tight font-black tracking-tighter uppercase italic sm:text-xl">
-						{first?.name ?? 'King'}
+						{first?.name ?? 'Goat'}
 					</p>
 
-					<span className="text-primary/80 text-xl font-black italic sm:text-2xl">
-						#1
-					</span>
+					<div className="text-primary/80 flex items-center justify-center gap-x-2 text-xl leading-none font-black italic">
+						<span>#1</span>
+						<span className="text-base opacity-30">—</span>
+						<span>{first?.totalPoints.toLocaleString() ?? '0'} XP</span>
+					</div>
 				</div>
 			</div>
 
 			<div className="flex flex-col items-center gap-y-3 pb-2">
 				<PodiumCircle rank={3} avatar={third?.image} />
-
 				<div className="w-full text-center">
 					<p className="truncate px-1 text-sm font-bold">
-						{third?.name ?? 'Challenger'}
+						{third?.name ?? 'Warrior'}
 					</p>
 
-					<span className="text-sm font-bold tracking-wider uppercase opacity-50">
-						#3
+					<span className="flex items-center justify-center gap-x-2 text-sm font-bold tracking-wider uppercase opacity-50">
+						<span>#3</span>
+						<span className="opacity-40">—</span>
+						<span>{third?.totalPoints.toLocaleString() ?? '0'} XP</span>
 					</span>
 				</div>
 			</div>
