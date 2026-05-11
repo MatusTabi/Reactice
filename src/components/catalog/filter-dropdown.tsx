@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronDown, ListFilter } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
