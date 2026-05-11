@@ -6,7 +6,7 @@ import DifficultyTag from './difficulty-tag';
 type CatalogCardProps = {
 	title: string;
 	description: string;
-	referenceUrl: string;
+	referenceUrl?: string;
 	creatorName: string;
 	difficulty: 'easy' | 'medium' | 'hard';
 	rating?: number;
@@ -22,7 +22,11 @@ const CatalogCard = ({
 }: CatalogCardProps) => (
 	<div className="bg-card relative flex h-108 justify-center rounded-lg border border-[#3d494d]">
 		<div className="flex w-full flex-col">
-			<CardComponentPreview className="h-1/2" referenceUrl={referenceUrl} />
+			{referenceUrl ? (
+				<CardComponentPreview className="h-1/2" referenceUrl={referenceUrl} />
+			) : (
+				<div className="h-1/2 w-full rounded-tl-lg rounded-tr-lg" />
+			)}
 			<CardComponentOverview
 				className="h-1/2"
 				title={title}
