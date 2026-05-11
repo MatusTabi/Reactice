@@ -10,7 +10,7 @@ export const createSubmissionSchema = z.object({
 	submittedCode: z.string().min(1),
 	score: z.number().int().min(0).max(100),
 	feedback: z.string(),
-	pointsAwarded: z.number().int().min(0)
+	pointsAwarded: z.number().int().min(0).max(50)
 });
 
 export type CreateSubmissionType = z.infer<typeof createSubmissionSchema>;
