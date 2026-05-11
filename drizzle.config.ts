@@ -11,7 +11,7 @@ if (!url) {
 }
 
 export default {
-	schema: './src/db/schema.ts',
+	schema: './src/db/schema',
 	out: './drizzle',
 	dialect: 'turso',
 	dbCredentials: {

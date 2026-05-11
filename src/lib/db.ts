@@ -1,11 +1,3 @@
-import { createClient } from '@libsql/client/web';
-import { drizzle } from 'drizzle-orm/libsql';
-
-import * as schema from '@/db/schema';
-
-const client = createClient({
-	url: process.env.TURSO_DATABASE_URL!,
-	authToken: process.env.TURSO_AUTH_TOKEN
-});
-
-export const db = drizzle(client, { schema });
+// Re-export from the canonical DB module.
+// Kept for backward-compatibility with auth.ts and other pre-refactor imports.
+export { db } from '@/db';
