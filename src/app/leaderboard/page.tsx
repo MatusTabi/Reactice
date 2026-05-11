@@ -28,7 +28,7 @@ const LeaderboardPage = async () => {
 		? await leaderboardQueries.getUserRank(userId)
 		: null;
 
-	const isTop10 = topUsers.slice(0, 10).some(u => u.id === userId);
+	const isTop10 = topUsers.some(u => u.id === userId);
 
 	const podiumUsers = topUsers.slice(0, 3);
 	const otherUsers = topUsers.slice(3, 10).map(u => ({

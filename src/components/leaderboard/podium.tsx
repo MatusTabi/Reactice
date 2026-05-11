@@ -21,7 +21,7 @@ const Podium = ({ users }: PodiumProps) => {
 						{second?.name ?? 'King'}
 					</p>
 
-					<span className="flex items-center justify-center gap-x-2 text-sm font-bold tracking-wider uppercase opacity-50">
+					<span className="flex flex-wrap items-center justify-center gap-x-1 text-sm font-bold tracking-wider uppercase opacity-50 sm:gap-x-2">
 						<span>#2</span>
 						<span className="opacity-40">—</span>
 						<span>{second?.totalPoints.toLocaleString() ?? '0'} XP</span>
@@ -43,7 +43,7 @@ const Podium = ({ users }: PodiumProps) => {
 						{first?.name ?? 'Goat'}
 					</p>
 
-					<div className="text-primary/80 flex items-center justify-center gap-x-2 text-xl leading-none font-black italic">
+					<div className="text-primary/80 flex flex-wrap items-center justify-center gap-x-1 text-xl leading-none font-black italic sm:gap-x-2">
 						<span>#1</span>
 						<span className="text-base opacity-30">—</span>
 						<span>{first?.totalPoints.toLocaleString() ?? '0'} XP</span>
@@ -58,7 +58,7 @@ const Podium = ({ users }: PodiumProps) => {
 						{third?.name ?? 'Warrior'}
 					</p>
 
-					<span className="flex items-center justify-center gap-x-2 text-sm font-bold tracking-wider uppercase opacity-50">
+					<span className="flex flex-wrap items-center justify-center gap-x-1 text-sm font-bold tracking-wider uppercase opacity-50 sm:gap-x-2">
 						<span>#3</span>
 						<span className="opacity-40">—</span>
 						<span>{third?.totalPoints.toLocaleString() ?? '0'} XP</span>
