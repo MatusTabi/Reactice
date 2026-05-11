@@ -1,7 +1,13 @@
 import { z } from 'zod';
 
+export const referenceFileSchema = z.object({
+	name: z.string(),
+	content: z.string()
+});
+
 export const evaluateRequestSchema = z.object({
-	userCode: z.string().min(1)
+	userCode: z.string().min(1),
+	referenceFiles: z.array(referenceFileSchema).optional()
 });
 
 export type EvaluateRequest = z.infer<typeof evaluateRequestSchema>;

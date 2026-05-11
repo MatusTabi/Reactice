@@ -17,7 +17,7 @@ const MODELS = [
 	'nvidia/nemotron-3-super-120b-a12b:free'
 ];
 
-const SYSTEM_PROMPT = `You are an expert React developer and UI evaluator.
+const QUALITY_SYSTEM_PROMPT = `You are an expert React developer and UI evaluator.
 You will receive a React component submitted by a user.
 Evaluate its quality and return ONLY a valid JSON object — no explanation, no markdown, no code fences.
 The JSON must match exactly this shape:
@@ -25,6 +25,31 @@ The JSON must match exactly this shape:
 Where:
 - "score" is an integer from 0 to 100 representing the overall quality of the component
 - "feedback" is a concise string explaining the score and pointing out specific strengths or issues`;
+
+const ACCURACY_SYSTEM_PROMPT = `You are an expert React developer and UI evaluator.
+You will receive a user's React component and the reference solution it should match.
+Compare the user's implementation against the reference and score its visual and structural accuracy.
+Return ONLY a valid JSON object — no explanation, no markdown, no code fences.
+The JSON must match exactly this shape:
+{ "score": number, "feedback": string }
+Where:
+- "score" is an integer from 0 to 100 representing how accurately the user's component matches the reference (100 = perfect match)
+- "feedback" is a concise string explaining the score and pointing out specific visual or structural differences from the reference`;
+
+const buildUserMessage = (
+	userCode: string,
+	referenceFiles?: Array<{ name: string; content: string }>
+): string => {
+	if (!referenceFiles?.length) {
+		return `Evaluate this React component:\n\n${userCode}`;
+	}
+
+	const referenceSection = referenceFiles
+		.map(f => `--- ${f.name} ---\n${f.content}`)
+		.join('\n\n');
+
+	return `Reference solution:\n\n${referenceSection}\n\nUser's submission:\n\n${userCode}`;
+};
 
 export const evaluateComponent = async (
 	data: EvaluateRequest
@@ -35,7 +60,11 @@ export const evaluateComponent = async (
 		throw new Error('OpenRouter API key is not configured');
 	}
 
-	const { userCode } = evaluateRequestSchema.parse(data);
+	const { userCode, referenceFiles } = evaluateRequestSchema.parse(data);
+
+	const systemPrompt = referenceFiles?.length
+		? ACCURACY_SYSTEM_PROMPT
+		: QUALITY_SYSTEM_PROMPT;
 
 	const openRouterResponse = await fetch(OPENROUTER_API_URL, {
 		method: 'POST',
@@ -49,10 +78,10 @@ export const evaluateComponent = async (
 			models: MODELS,
 			route: 'fallback',
 			messages: [
-				{ role: 'system', content: SYSTEM_PROMPT },
+				{ role: 'system', content: systemPrompt },
 				{
 					role: 'user',
-					content: `Evaluate this React component:\n\n${userCode}`
+					content: buildUserMessage(userCode, referenceFiles)
 				}
 			]
 		})
