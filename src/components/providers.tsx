@@ -5,6 +5,8 @@ import { SessionProvider } from 'next-auth/react';
 import { type PropsWithChildren, useState } from 'react';
 import { Toaster } from 'sonner';
 
+import { ThemeProvider } from './theme-provider';
+
 export const Providers = ({ children }: PropsWithChildren) => {
 	const [queryClient] = useState(
 		() =>
@@ -21,8 +23,15 @@ export const Providers = ({ children }: PropsWithChildren) => {
 	return (
 		<SessionProvider>
 			<QueryClientProvider client={queryClient}>
-				{children}
-				<Toaster richColors position="top-right" />
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					{children}
+					<Toaster richColors position="top-right" />
+				</ThemeProvider>
 			</QueryClientProvider>
 		</SessionProvider>
 	);
