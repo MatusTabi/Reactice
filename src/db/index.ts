@@ -15,9 +15,10 @@ export {
 	accounts,
 	challenges,
 	sessions,
+	submissions,
 	users,
 	verificationTokens
 } from './schema';
 
 // Types
-export type { Challenge, NewUser, User } from './schema';
+export type { Challenge, NewUser, Submission, User } from './schema';
