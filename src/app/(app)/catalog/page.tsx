@@ -1,5 +1,3 @@
-'use server';
-
 import CatalogCard from '@/components/catalog/catalog-card';
 import FilterDropdown from '@/components/catalog/filter-dropdown';
 import { Button } from '@/components/ui/button';
