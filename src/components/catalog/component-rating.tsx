@@ -1,6 +1,10 @@
 import { Star } from 'lucide-react';
 
-const ComponentRating = ({ rating }: { rating: number }) => (
+type ComponentRatingProps = {
+	rating?: number;
+};
+
+const ComponentRating = ({ rating }: ComponentRatingProps) => (
 	<>
 		<div className="flex items-center gap-1">
 			<Star className="text-lime-500" />

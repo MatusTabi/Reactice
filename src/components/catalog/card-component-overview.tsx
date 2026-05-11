@@ -6,19 +6,29 @@ import CreatedBy from './component-created-by';
 import { ArrowRight } from 'lucide-react';
 
 type CardComponentOverviewProps = {
+	title: string;
+	description: string;
+	creatorName: string;
+	rating?: number;
 	className?: string;
 };
 
-const CardComponentOverview = ({ className }: CardComponentOverviewProps) => (
+const CardComponentOverview = ({
+	title,
+	description,
+	creatorName,
+	rating,
+	className
+}: CardComponentOverviewProps) => (
 	<div className={cn('flex flex-col justify-center px-8 py-2', className)}>
 		<div className="flex items-center justify-between">
-			<ComponentTitle title="Component title" />
-			<ComponentRating rating={4.5} />
+			<ComponentTitle title={title} />
+			<ComponentRating rating={rating} />
 		</div>
-		<ComponentDescription description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+		<ComponentDescription description={description} />
 		<hr className="my-4 border-gray-700" />
 		<div className="flex items-center justify-between">
-			<CreatedBy createdBy="John Doe" />
+			<CreatedBy createdBy={creatorName} />
 			<ArrowRight className="text-muted-foreground" />
 		</div>
 	</div>
