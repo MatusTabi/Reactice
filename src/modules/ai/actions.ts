@@ -46,9 +46,9 @@ Rules:
     30–49:  partially correct, significant structural or styling differences
     0–29:   fundamentally different from the reference or non-functional
 - "feedback": 1–2 sentence overall summary covering both correctness and code quality
-- "strengths": exactly 2–3 specific things the user did well (correctness or code quality)
-- "weaknesses": exactly 2–3 specific issues — missing/wrong elements, styling differences, or code problems; omit if score is 90+
-- "suggestions": exactly 2–3 concrete, actionable code-level fixes; omit if score is 90+
+- "strengths": 0–3 specific things the user did well (correctness or code quality)
+- "weaknesses": 0–3 specific issues — missing/wrong elements, styling differences, or code problems; omit if score is 90+
+- "suggestions": 0–3 concrete, actionable code-level fixes; omit if score is 90+
 
 Be specific — reference actual JSX elements, Tailwind classes, prop names, or hook usage where relevant.`;
 
