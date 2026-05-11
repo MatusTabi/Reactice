@@ -19,7 +19,7 @@ const UserProfile = ({ user }: { user: User }) => (
 					alt={user.name ?? 'Profile'}
 					width={36}
 					height={36}
-					className="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-85 dark:group-hover:opacity-75"
+					className="h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-85 dark:group-hover:opacity-80"
 				/>
 			) : (
 				<UserIcon className="group-hover:text-foreground/95 h-5 w-5 transition-colors duration-300" />

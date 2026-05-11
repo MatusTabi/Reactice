@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 import { Button } from '../ui/button';
 
@@ -16,23 +17,27 @@ const Hero = () => (
 			feedback on your code and visual accuracy.
 		</p>
 
-		{/* TODO: Use links here in the future. */}
 		<div className="mt-8 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
-			<Button
-				size="lg"
-				className="group shadow-primary/20 dark:bg-primary/90 h-12 w-full cursor-pointer gap-2 px-10 text-base font-bold shadow-2xl transition-all active:scale-[0.98] sm:w-auto"
-			>
-				Start Coding
-				<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-			</Button>
+			<Link href="/catalog">
+				<Button
+					size="lg"
+					className="group shadow-primary/20 dark:bg-primary/90 h-12 w-full cursor-pointer gap-2 px-10 text-base font-bold shadow-2xl transition-all active:scale-[0.98] sm:w-auto"
+				>
+					Start Coding
+					<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+				</Button>
+			</Link>
 
-			<Button
-				size="lg"
-				variant="outline"
-				className="hover:bg-muted/50 border-foreground/10 h-12 w-full cursor-pointer px-10 text-base font-bold transition-all active:scale-[0.98] sm:w-auto"
-			>
-				Browse Gallery
-			</Button>
+			{/* TODO: Change href to community challenges if implemented, otherwise fallback to leaderboard. */}
+			<Link href="/">
+				<Button
+					size="lg"
+					variant="outline"
+					className="hover:bg-muted/50 border-foreground/10 h-12 w-full cursor-pointer px-10 text-base font-bold transition-all active:scale-[0.98] sm:w-auto"
+				>
+					Browse Comunity
+				</Button>
+			</Link>
 		</div>
 	</>
 );
