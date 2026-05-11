@@ -4,10 +4,10 @@ import { type ReactNode } from 'react';
 import { Providers } from '@/components/providers';
 
 import './globals.css';
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { Geist } from 'next/font/google';
+import { cn } from '@/lib/cn';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
 	title: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
-	<html lang="en" className={cn("font-sans", geist.variable)}>
+	<html lang="en" className={cn('font-sans', geist.variable)}>
 		<body>
 			<Providers>{children}</Providers>
 		</body>
