@@ -6,7 +6,13 @@ export const referenceFileSchema = z.object({
 });
 
 export const evaluateRequestSchema = z.object({
-	userCode: z.string().min(1).max(10000),
+	userCode: z
+		.string()
+		.min(1)
+		// ~20k chars ≈ 5k tokens — fits comfortably alongside the system prompt
+		// and reference files within the 8k-context free-tier OpenRouter models,
+		// while still bounding the request against abuse.
+		.max(20000),
 	referenceFiles: z.array(referenceFileSchema).min(1)
 });
 

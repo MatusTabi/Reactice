@@ -1,4 +1,4 @@
-import { count, desc, eq, sum } from 'drizzle-orm';
+import { countDistinct, desc, eq, sum } from 'drizzle-orm';
 
 import { db, submissions, users } from '@/db';
 
@@ -13,7 +13,8 @@ const getRanked = async (limit?: number): Promise<LeaderboardEntryType[]> => {
 			name: users.name,
 			image: users.image,
 			totalPoints: sum(submissions.pointsAwarded),
-			completed: count(submissions.id)
+			// Distinct so re-submissions of the same challenge count once.
+			completed: countDistinct(submissions.challengeId)
 		})
 		.from(users)
 		.leftJoin(submissions, eq(submissions.userId, users.id))
@@ -37,6 +38,9 @@ const getRanked = async (limit?: number): Promise<LeaderboardEntryType[]> => {
 
 const getTop = ({ limit = 10 }: { limit?: number } = {}) => getRanked(limit);
 
+// O(N): fetches the full ranked list and finds the user in JS.
+// Fine for our scale; for a production leaderboard with many users this should
+// be a single query using a window function (RANK() OVER (ORDER BY ...)).
 const getUserRank = async (
 	userId: string
 ): Promise<LeaderboardEntryType | null> => {
