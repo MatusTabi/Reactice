@@ -1,7 +1,7 @@
 import { cn } from '@/lib/cn';
 
 type CardComponentPreviewProps = {
-	referenceUrl: string;
+	referenceUrl?: string;
 	className?: string;
 };
 
@@ -12,7 +12,6 @@ const CardComponentPreview = ({
 	<div className={cn('flex items-center justify-center', className)}>
 		<img
 			src={referenceUrl}
-			alt="Component Preview"
 			className="h-full w-full rounded-tl-lg rounded-tr-lg object-cover"
 		/>
 	</div>
