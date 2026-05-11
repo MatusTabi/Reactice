@@ -1,55 +1,65 @@
-'use client';
+'use server';
 
 import CatalogCard from '@/components/catalog/catalog-card';
 import FilterDropdown from '@/components/catalog/filter-dropdown';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ListFilter } from 'lucide-react';
-import { useState } from 'react';
+import { Suspense } from 'react';
+import { challengeQueries } from '@/backend/challenge/queries';
+import SearchComponentsBar from '@/components/catalog/search-bar';
 
-const ComponentCatalog = () => {
-	const [search, setSearch] = useState('');
+const CatalogPage = async () => {
+	'use cache';
+	const challenges = await challengeQueries.getAll();
 
 	return (
-		<div className="bg-background/80 h-full w-full px-64 pt-16 pb-16">
-			<section className="mb-12 flex w-full justify-between">
-				<Input
-					type="search"
-					placeholder="Search components..."
-					className="text-foreground h-10 w-1/3 rounded-md border-[#3d494d]"
-					value={search}
-					onChange={e => {
-						setSearch(e.target.value);
-						console.log(e.target.value);
-					}}
-				/>
-				<div className="flex items-center">
-					<FilterDropdown
-						title="Categories"
-						content={['All', 'Navbar', 'Card', 'Form']}
-						preIcon={<ListFilter className="inline h-4 w-4" />}
-					/>
-					<FilterDropdown
-						title="Sort By"
-						content={['Name', 'Date Added', 'Popularity']}
-					/>
-					<FilterDropdown
-						title="Difficulty"
-						content={['All', 'Beginner', 'Intermediate', 'Advanced']}
-					/>
-				</div>
-			</section>
-			<section className="grid grid-cols-3 items-stretch gap-8">
-				<CatalogCard />
-				<CatalogCard />
-				<CatalogCard />
-				<CatalogCard />
-				<CatalogCard />
-				<CatalogCard />
-			</section>
-			<Button className="mx-auto mt-12 flex items-center p-4">Load More</Button>
-		</div>
+		<Suspense fallback={<div>Loading...</div>}>
+			<div className="bg-background/80 h-full w-full px-64 pt-16 pb-16">
+				{challenges.length === 0 ? (
+					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
+						<p className="text-foreground/80 text-lg">No components found.</p>
+					</div>
+				) : (
+					<>
+						<section className="mb-12 flex w-full justify-between">
+							<SearchComponentsBar />
+							<div className="flex items-center">
+								{/* <FilterDropdown
+									title="Categories"
+									content={['All', 'Navbar', 'Card', 'Form']}
+									preIcon={<ListFilter className="inline h-4 w-4" />}
+								/> */}
+								<FilterDropdown
+									title="Sort By"
+									content={['Name', 'Date Added', 'Popularity']}
+								/>
+								<FilterDropdown
+									title="Difficulty"
+									content={['All', 'Easy', 'Medium', 'Hard']}
+								/>
+							</div>
+						</section>
+						<section className="grid grid-cols-3 items-stretch gap-8">
+							{challenges.map(challenge => (
+								<CatalogCard
+									key={challenge.id}
+									title={challenge.title}
+									description={challenge.description}
+									referenceUrl={challenge.referenceImageUrl ?? ''}
+									creatorName={challenge.creator.name ?? 'Unknown'}
+									difficulty={challenge.difficulty}
+								/>
+							))}
+						</section>
+						<Button className="mx-auto mt-12 flex items-center p-4">
+							Load More
+						</Button>
+					</>
+				)}
+			</div>
+		</Suspense>
 	);
 };
 
-export default ComponentCatalog;
+export default CatalogPage;
