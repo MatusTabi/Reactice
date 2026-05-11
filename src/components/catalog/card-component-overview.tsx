@@ -19,7 +19,7 @@ const CardComponentOverview = ({ className }: CardComponentOverviewProps) => (
 		<hr className="my-4 border-gray-700" />
 		<div className="flex items-center justify-between">
 			<CreatedBy createdBy="John Doe" />
-			<ArrowRight className="text-gray-400" />
+			<ArrowRight className="text-muted-foreground" />
 		</div>
 	</div>
 );

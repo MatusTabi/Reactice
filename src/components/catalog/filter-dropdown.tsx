@@ -17,7 +17,7 @@ type FilterDropdownProps = {
 const FilterDropdown = ({ title, content, preIcon }: FilterDropdownProps) => (
 	<DropdownMenu>
 		<DropdownMenuTrigger asChild>
-			<Button className="ml-4 h-10 gap-2 border border-[#3d494d] bg-transparent">
+			<Button className="bg-primary text-primary-foreground border-primary ml-4 h-10 gap-2 border">
 				{preIcon}
 				{title}
 				<ChevronDown className="inline h-4 w-4" />

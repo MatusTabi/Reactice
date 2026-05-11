@@ -4,7 +4,7 @@ import CategoryTag from './category-tag';
 import DifficultyTag from './difficulty-tag';
 
 const CatalogCard = () => (
-	<div className="relative flex h-108 justify-center rounded-lg border border-[#3d494d] bg-[#262a31]">
+	<div className="bg-card relative flex h-108 justify-center rounded-lg border border-[#3d494d]">
 		<div className="flex w-full flex-col">
 			<CardComponentPreview className="h-1/2" />
 			<CardComponentOverview className="h-1/2" />
