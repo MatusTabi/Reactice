@@ -11,7 +11,13 @@ const client = createClient({
 export const db = drizzle(client, { schema });
 
 // Tables
-export { accounts, sessions, users, verificationTokens } from './schema';
+export {
+	accounts,
+	challenges,
+	sessions,
+	users,
+	verificationTokens
+} from './schema';
 
 // Types
-export type { NewUser, User } from './schema';
+export type { Challenge, NewUser, User } from './schema';
