@@ -30,7 +30,7 @@ const CatalogPage = async () => {
 								/> */}
 								<FilterDropdown
 									title="Sort By"
-									content={['Name', 'Date Added', 'Popularity']}
+									content={['Name', 'Date Added']}
 								/>
 								<FilterDropdown
 									title="Difficulty"
