@@ -12,11 +12,11 @@
  *   2. Inserts a fixed "seed creator" user that owns all sample challenges.
  *   3. Inserts 6 challenges (mixed difficulty + category) with Sandpack-
  *      ready /App.tsx reference code.
- *   4. Inserts 3 fake learner users and ~8 submissions across them so the
+ *   4. Inserts 3 fake learner users and 8 submissions across them so the
  *      leaderboard has a deterministic ordering: Alice > Bob > Carol.
  *
  * Requires .env.local with TURSO_DATABASE_URL and TURSO_AUTH_TOKEN.
- * The Drizzle schema must already be pushed (`npm run db:push`).
+ * The category column is added automatically if missing (db:push not required).
  */
 
 import { createClient } from '@libsql/client';
@@ -446,13 +446,24 @@ const main = async () => {
 	});
 	const db = drizzle(client, { schema });
 
+	// Ensure category column exists — db:push can fail silently on some setups.
+	// SQLite ignores the error if the column already exists via this try/catch.
+	console.log('Ensuring schema is up to date...');
+	try {
+		await client.execute(
+			"ALTER TABLE challenge ADD COLUMN category TEXT NOT NULL DEFAULT ''"
+		);
+		console.log('  Added category column.');
+	} catch {
+		// Column already exists — safe to continue.
+	}
+
 	console.log('Wiping existing seed data...');
 
 	// FK-safe order: submissions → challenge_files → challenges → users.
 	// All scoped to seed user IDs so real OAuth users and their data survive.
 	const seedChallenges = await db.query.challenges.findMany({
-		where: (c, { inArray: inArrayFn }) =>
-			inArrayFn(c.creatorId, SEED_USER_ID_LIST)
+		where: inArray(challenges.creatorId, SEED_USER_ID_LIST)
 	});
 	const seedChallengeIds = seedChallenges.map(c => c.id);
 
