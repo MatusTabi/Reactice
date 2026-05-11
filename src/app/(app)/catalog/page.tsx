@@ -3,7 +3,6 @@
 import CatalogCard from '@/components/catalog/catalog-card';
 import FilterDropdown from '@/components/catalog/filter-dropdown';
 import { Button } from '@/components/ui/button';
-import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { ListFilter } from 'lucide-react';
 import { useState } from 'react';
