@@ -23,7 +23,7 @@ const CardComponentOverview = ({
 	<div className={cn('flex flex-col justify-center px-8 py-2', className)}>
 		<div className="flex items-center justify-between">
 			<ComponentTitle title={title} />
-			<ComponentRating rating={rating} />
+			{/* <ComponentRating rating={rating} /> */}
 		</div>
 		<ComponentDescription description={description} />
 		<hr className="my-4 border-gray-700" />
