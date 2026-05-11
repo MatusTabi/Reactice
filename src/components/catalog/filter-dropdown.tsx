@@ -12,11 +12,19 @@ import {
 
 type FilterDropdownProps = {
 	title: string;
+	value?: string;
+	onChange?: (value: string) => void;
 	content: string[];
 	preIcon?: React.ReactNode;
 };
 
-const FilterDropdown = ({ title, content, preIcon }: FilterDropdownProps) => (
+const FilterDropdown = ({
+	title,
+	value,
+	onChange,
+	content,
+	preIcon
+}: FilterDropdownProps) => (
 	<DropdownMenu>
 		<DropdownMenuTrigger asChild>
 			<Button className="bg-primary text-primary-foreground border-primary ml-4 h-10 gap-2 border">
@@ -28,7 +36,9 @@ const FilterDropdown = ({ title, content, preIcon }: FilterDropdownProps) => (
 		<DropdownMenuContent className="w-40" align="start">
 			<DropdownMenuGroup>
 				{content.map(item => (
-					<DropdownMenuItem key={item}>{item}</DropdownMenuItem>
+					<DropdownMenuItem key={item} onClick={() => onChange?.(item)}>
+						{item}
+					</DropdownMenuItem>
 				))}
 			</DropdownMenuGroup>
 		</DropdownMenuContent>
