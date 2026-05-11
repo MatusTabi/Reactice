@@ -29,6 +29,7 @@ export const createChallengeSchema = z.object({
 	title: z.string().min(1).max(100),
 	description: z.string().min(1).max(1000),
 	difficulty: difficultySchema,
+	category: z.string().min(1).max(50),
 	referenceImageUrl: z.string().url().nullish(),
 	files: z.array(challengeFileInputSchema).min(1)
 });
@@ -40,6 +41,7 @@ export const updateChallengeSchema = z.object({
 	title: z.string().min(1).max(100).optional(),
 	description: z.string().min(1).max(1000).optional(),
 	difficulty: difficultySchema.optional(),
+	category: z.string().min(1).max(50).optional(),
 	referenceImageUrl: z.string().url().nullish(),
 	files: z.array(challengeFileInputSchema).min(1).optional()
 });
@@ -53,6 +55,7 @@ export const challengeBasicSchema = z.object({
 	title: z.string(),
 	description: z.string(),
 	difficulty: difficultySchema,
+	category: z.string(),
 	referenceImageUrl: z.string().nullable(),
 	creatorId: z.string(),
 	createdAt: z.number()

@@ -11,6 +11,7 @@ export const challenges = sqliteTable('challenge', {
 	difficulty: text('difficulty', {
 		enum: ['easy', 'medium', 'hard']
 	}).notNull(),
+	category: text('category').notNull(),
 	referenceImageUrl: text('reference_image_url'),
 	creatorId: text('creator_id')
 		.notNull()
