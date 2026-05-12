@@ -202,7 +202,7 @@ const ScriptAreaContent = ({
 								src={referenceUrl ?? '/placeholder.png'}
 								alt="Target output"
 								fill
-								className="scale-150 object-cover"
+								className="object-contain object-top"
 							/>
 						</div>
 					</div>
