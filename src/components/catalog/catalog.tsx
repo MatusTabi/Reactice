@@ -41,14 +41,14 @@ const Catalog = ({ challenges }: CatalogProps) => {
 		});
 
 	return (
-		<div className="bg-background/80 h-full w-full px-64 pt-16 pb-16">
+		<div className="bg-background/80 h-full w-full px-4 pt-8 pb-16 sm:px-8 md:px-16 lg:px-32 xl:px-64">
 			{challenges.length === 0 ? (
 				<>
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
 						<p className="text-foreground/80 text-lg">No components found.</p>
 					</div>
 					<div className="flex justify-end">
-						<Button asChild className="p-2">
+						<Button asChild variant="outline" className="p-2">
 							<Link href="/challenges/new">
 								<Plus className="h-4 w-4" />
 								Create Your Own
@@ -58,14 +58,9 @@ const Catalog = ({ challenges }: CatalogProps) => {
 				</>
 			) : (
 				<>
-					<section className="mb-12 flex w-full justify-between">
+					<section className="mb-8 flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 						<SearchComponentsBar value={search} onChange={setSearch} />
-						<div className="flex items-center">
-							{/* <FilterDropdown
-								title="Categories"
-								content={['All', 'Navbar', 'Card', 'Form']}
-								preIcon={<ListFilter className="inline h-4 w-4" />}
-							/> */}
+						<div className="flex flex-wrap items-center gap-2">
 							<FilterDropdown
 								title="Sort By"
 								content={['Name', 'Date Added']}
@@ -78,7 +73,7 @@ const Catalog = ({ challenges }: CatalogProps) => {
 								value={difficultyFilter}
 								onChange={setDifficultyFilter}
 							/>
-							<Button asChild className="ml-4 h-10 p-2">
+							<Button asChild variant="outline" className="h-10 p-2">
 								<Link href="/challenges/new">
 									<Plus className="h-4 w-4" />
 									Create Your Own

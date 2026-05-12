@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { challengeQueries } from '@/backend/challenge/queries';
 import Catalog from '@/components/catalog/catalog';
+import PageLoader from '@/components/ui/page-loader';
 
 const CatalogContent = async () => {
 	const challenges = await challengeQueries.getAll();
@@ -10,7 +11,7 @@ const CatalogContent = async () => {
 };
 
 const CatalogPage = async () => (
-	<Suspense fallback={<div>Loading...</div>}>
+	<Suspense fallback={<PageLoader />}>
 		<CatalogContent />
 	</Suspense>
 );

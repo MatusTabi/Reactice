@@ -10,7 +10,7 @@ const ResultPage = () => {
 	const score = result?.score ?? 0;
 
 	return (
-		<main className="bg-surface flex h-[calc(100vh-69px)] w-full flex-col items-center justify-center gap-8">
+		<main className="bg-surface flex min-h-[calc(100vh-69px)] w-full flex-col items-center justify-center gap-8 px-4 py-10">
 			<DonutScore score={score} size={250} strokeWidth={16} />
 			<FeedbackTitle score={score} />
 			<FeedbackComponent

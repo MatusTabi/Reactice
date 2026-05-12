@@ -4,14 +4,14 @@ type PillsProps = {
 };
 
 const Pills = ({ previewTab, setPreviewTab }: PillsProps) => (
-	<div className="border-primary-foreground bg-primary flex items-center gap-1 rounded-full border p-1">
+	<div className="bg-muted flex items-center gap-1 rounded-full p-1">
 		<button
 			type="button"
 			onClick={() => setPreviewTab('live')}
 			className={`rounded-full px-3 py-1 text-xs font-medium transition ${
 				previewTab === 'live'
-					? 'bg-white text-black'
-					: 'text-on-surface hover:text-white'
+					? 'bg-background text-foreground shadow-sm'
+					: 'text-muted-foreground hover:text-foreground'
 			}`}
 		>
 			Live Preview
@@ -21,8 +21,8 @@ const Pills = ({ previewTab, setPreviewTab }: PillsProps) => (
 			onClick={() => setPreviewTab('target')}
 			className={`rounded-full px-3 py-1 text-xs font-medium transition ${
 				previewTab === 'target'
-					? 'bg-white text-black'
-					: 'text-on-surface hover:text-white'
+					? 'bg-background text-foreground shadow-sm'
+					: 'text-muted-foreground hover:text-foreground'
 			}`}
 		>
 			Target Output

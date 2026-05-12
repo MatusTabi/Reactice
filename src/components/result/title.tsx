@@ -3,7 +3,7 @@ type FeedbackTitleProps = {
 };
 
 const FeedbackTitle = ({ score }: FeedbackTitleProps) => (
-	<h1 className="text-3xl font-bold text-white">
+	<h1 className="text-foreground text-3xl font-bold">
 		{score >= 80
 			? 'Excellent work!'
 			: score >= 60

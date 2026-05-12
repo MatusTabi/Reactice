@@ -30,7 +30,7 @@ export const AuthForm = ({
 				await signIn('github', { redirectTo: '/app/profile' });
 			}}
 		>
-			<Button className="w-full" type="submit">
+			<Button className="w-full cursor-pointer" type="submit">
 				{buttonText}
 			</Button>
 		</form>

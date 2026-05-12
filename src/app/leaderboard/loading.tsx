@@ -1,7 +1,5 @@
-const LeaderboardLoading = () => (
-	<div className="flex min-h-screen items-center justify-center">
-		<div className="border-primary h-10 w-10 animate-spin rounded-full border-4 border-t-transparent" />
-	</div>
-);
+import PageLoader from '@/components/ui/page-loader';
+
+const LeaderboardLoading = () => <PageLoader />;
 
 export default LeaderboardLoading;

@@ -70,7 +70,8 @@ export const submitSolutionAction = async (input: SubmitSolutionInput) => {
 	});
 
 	revalidatePath('/leaderboard');
-	revalidatePath('/profile');
+	revalidatePath('/app/profile');
+	revalidatePath('/app/profile', 'layout');
 
 	return { submission, evaluation };
 };

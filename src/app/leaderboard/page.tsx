@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { leaderboardQueries } from '@/backend/leaderboard/queries';
+import PageLoader from '@/components/ui/page-loader';
 import { getUserServerCtx } from '@/app/server/user-server-ctx';
 import PersonalRank from '@/components/leaderboard/personal-rank';
 import Podium from '@/components/leaderboard/podium';
@@ -60,7 +61,7 @@ const LeaderboardContent = async () => {
 };
 
 const LeaderboardPage = () => (
-	<Suspense>
+	<Suspense fallback={<PageLoader />}>
 		<LeaderboardContent />
 	</Suspense>
 );

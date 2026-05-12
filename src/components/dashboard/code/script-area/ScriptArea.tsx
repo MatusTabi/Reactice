@@ -7,7 +7,7 @@ import {
 	SandpackProvider,
 	useSandpack
 } from '@codesandbox/sandpack-react';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -18,7 +18,7 @@ import {
 	type ChallengeDetailType,
 	type ChallengeFileType
 } from '@/backend/challenge/schema';
-import { useEvaluateMutation } from '@/modules/ai/hooks/api';
+import { useSubmitMutation } from '@/modules/ai/hooks/api';
 import { useEvaluationResult } from '@/modules/ai/context/evaluation-result-context';
 
 import ScriptAreaHeader from './ScriptAreaHeader';
@@ -36,13 +36,25 @@ const ScriptAreaContent = ({
 }: ScriptAreaContentProps) => {
 	const { sandpack } = useSandpack();
 	const [previewTab, setPreviewTab] = useState<'live' | 'target'>('live');
-	const { mutate, isPending } = useEvaluateMutation();
+	const [mobilePanel, setMobilePanel] = useState<'code' | 'preview'>('code');
+	const { mutate, isPending } = useSubmitMutation();
 	const router = useRouter();
 	const { setResult } = useEvaluationResult();
 
 	const activeFile = sandpack.activeFile;
 	const activeCode = sandpack.files[activeFile]?.code ?? '';
 	const canSubmit = referenceFiles.length > 0 && activeCode.trim().length > 0;
+
+	useEffect(() => {
+		if (!isPending) return;
+
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			e.preventDefault();
+		};
+
+		window.addEventListener('beforeunload', handleBeforeUnload);
+		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+	}, [isPending]);
 
 	const handleSubmit = () => {
 		if (!canSubmit || isPending) {
@@ -51,15 +63,12 @@ const ScriptAreaContent = ({
 
 		mutate(
 			{
-				userCode: activeCode,
-				referenceFiles: referenceFiles.map(file => ({
-					name: file.name,
-					content: file.content
-				}))
+				challengeId: challengeId ?? '',
+				submittedCode: activeCode
 			},
 			{
 				onSuccess: data => {
-					setResult(data);
+					setResult(data.evaluation);
 					router.push(`${challengeId}/result`);
 				},
 				onError: () => {
@@ -70,12 +79,58 @@ const ScriptAreaContent = ({
 	};
 
 	return (
-		<div className="flex h-full min-h-0 w-full flex-row overflow-hidden">
-			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
+		<div className="relative flex h-full min-h-0 w-full flex-col overflow-hidden md:flex-row">
+			{isPending && (
+				<div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/60 backdrop-blur-sm">
+					<div className="relative flex items-center justify-center">
+						<div className="border-primary/30 h-16 w-16 rounded-full border-4" />
+						<div className="border-primary absolute h-16 w-16 animate-spin rounded-full border-4 border-t-transparent" />
+						<div className="bg-primary absolute h-3 w-3 animate-pulse rounded-full" />
+					</div>
+					<p className="text-sm font-medium text-white">
+						Evaluating your submission…
+					</p>
+					<p className="text-xs text-white/60">
+						Please wait, do not navigate away
+					</p>
+				</div>
+			)}
+
+			{/* Mobile tab switcher */}
+			<div className="bg-muted border-accent flex shrink-0 border-b md:hidden">
+				<button
+					type="button"
+					onClick={() => setMobilePanel('code')}
+					className={`flex-1 py-2 text-xs font-medium transition ${
+						mobilePanel === 'code'
+							? 'bg-background text-foreground'
+							: 'text-muted-foreground hover:text-foreground'
+					}`}
+				>
+					Code
+				</button>
+				<button
+					type="button"
+					onClick={() => setMobilePanel('preview')}
+					className={`flex-1 py-2 text-xs font-medium transition ${
+						mobilePanel === 'preview'
+							? 'bg-background text-foreground'
+							: 'text-muted-foreground hover:text-foreground'
+					}`}
+				>
+					Preview
+				</button>
+			</div>
+
+			<div
+				className={`flex min-h-0 flex-col overflow-hidden md:flex md:w-1/2 ${
+					mobilePanel === 'code' ? 'flex h-full w-full' : 'hidden'
+				}`}
+			>
 				<div className="flex min-h-0 flex-3 flex-col">
 					<ScriptAreaHeader title="Code Editor">
 						<Button
-							className="bg-primary text-primary-foreground"
+							className="bg-primary text-primary-foreground cursor-pointer"
 							disabled={!canSubmit || isPending}
 							onClick={handleSubmit}
 						>
@@ -102,14 +157,24 @@ const ScriptAreaContent = ({
 							)}
 						</Button>
 					</ScriptAreaHeader>
-					<SandpackCodeEditor className="border-accent min-h-0 flex-1 overflow-auto border" />
+					<SandpackCodeEditor
+						showLineNumbers
+						showInlineErrors
+						wrapContent
+						className="border-accent min-h-0 flex-1 overflow-auto border"
+						style={{ fontFamily: 'var(--font-mono)' }}
+					/>
 				</div>
 				<div className="flex min-h-0 flex-1 flex-col">
 					<ScriptAreaHeader title="Console" />
 					<SandpackConsole className="border-accent min-h-0 flex-1 overflow-auto border" />
 				</div>
 			</div>
-			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
+			<div
+				className={`flex min-h-0 flex-col overflow-hidden md:flex md:w-1/2 ${
+					mobilePanel === 'preview' ? 'flex h-full w-full' : 'hidden'
+				}`}
+			>
 				<div className="flex min-h-0 flex-1 flex-col">
 					<ScriptAreaHeader title="Live Preview">
 						<Pills previewTab={previewTab} setPreviewTab={setPreviewTab} />
@@ -137,6 +202,7 @@ const ScriptAreaContent = ({
 								src={referenceUrl ?? '/placeholder.png'}
 								alt="Target output"
 								fill
+								className="object-contain object-top"
 							/>
 						</div>
 					</div>
