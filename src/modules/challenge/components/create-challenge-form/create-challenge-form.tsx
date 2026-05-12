@@ -109,11 +109,17 @@ export const CreateChallengeForm = () => {
 		);
 	};
 
-	const { register, formState: { errors } } = form;
+	const {
+		register,
+		formState: { errors }
+	} = form;
 
 	return (
 		<FormProvider {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="flex flex-col gap-5"
+			>
 				{/* Title */}
 				<FormInput name="title" label="Title" placeholder="e.g. Profile Card" />
 
@@ -203,9 +209,7 @@ export const CreateChallengeForm = () => {
 						onChange={handleFileChange}
 						className="text-foreground file:border-input file:bg-secondary file:text-secondary-foreground text-sm file:mr-3 file:rounded-md file:border file:px-2.5 file:py-1 file:text-xs"
 					/>
-					{imageError && (
-						<p className="text-sm text-red-500">{imageError}</p>
-					)}
+					{imageError && <p className="text-sm text-red-500">{imageError}</p>}
 					{imagePreview && (
 						// eslint-disable-next-line @next/next/no-img-element
 						<img
