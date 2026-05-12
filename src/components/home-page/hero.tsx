@@ -18,7 +18,7 @@ const Hero = () => (
 		</p>
 
 		<div className="mt-8 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
-			<Link href="/evaluate">
+			<Link href="/catalog">
 				<Button
 					size="lg"
 					className="group shadow-primary/20 dark:bg-primary/90 h-12 w-full cursor-pointer gap-2 px-10 text-base font-bold shadow-2xl transition-all active:scale-[0.98] sm:w-auto"
