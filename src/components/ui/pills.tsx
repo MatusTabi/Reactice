@@ -4,7 +4,7 @@ type PillsProps = {
 };
 
 const Pills = ({ previewTab, setPreviewTab }: PillsProps) => (
-	<div className="border-outline bg-surface-container-heighest flex items-center gap-1 rounded-full border p-1">
+	<div className="border-primary-foreground bg-primary flex items-center gap-1 rounded-full border p-1">
 		<button
 			type="button"
 			onClick={() => setPreviewTab('live')}
