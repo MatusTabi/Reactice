@@ -6,6 +6,7 @@ import { type PropsWithChildren, useState } from 'react';
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from './theme-provider';
+import { EvaluationResultProvider } from '@/modules/ai/context/evaluation-result-context';
 
 export const Providers = ({ children }: PropsWithChildren) => {
 	const [queryClient] = useState(
@@ -23,15 +24,17 @@ export const Providers = ({ children }: PropsWithChildren) => {
 	return (
 		<SessionProvider>
 			<QueryClientProvider client={queryClient}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					{children}
-					<Toaster richColors position="top-right" />
-				</ThemeProvider>
+				<EvaluationResultProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						{children}
+						<Toaster richColors position="top-right" />
+					</ThemeProvider>
+				</EvaluationResultProvider>
 			</QueryClientProvider>
 		</SessionProvider>
 	);
