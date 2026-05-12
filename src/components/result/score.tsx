@@ -48,9 +48,8 @@ const DonutScore = ({
 			</svg>
 
 			<div className="absolute flex flex-col items-center">
-				<span className="text-6xl font-bold text-white">{score}</span>
-
-				<span className="text-xl text-zinc-400">/ 100</span>
+				<span className="text-foreground text-6xl font-bold">{score}</span>
+				<span className="text-muted-foreground text-xl">/ 100</span>
 			</div>
 		</div>
 	);

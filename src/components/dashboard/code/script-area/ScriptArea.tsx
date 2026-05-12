@@ -36,6 +36,7 @@ const ScriptAreaContent = ({
 }: ScriptAreaContentProps) => {
 	const { sandpack } = useSandpack();
 	const [previewTab, setPreviewTab] = useState<'live' | 'target'>('live');
+	const [mobilePanel, setMobilePanel] = useState<'code' | 'preview'>('code');
 	const { mutate, isPending } = useEvaluateMutation();
 	const router = useRouter();
 	const { setResult } = useEvaluationResult();
@@ -81,7 +82,7 @@ const ScriptAreaContent = ({
 	};
 
 	return (
-		<div className="relative flex h-full min-h-0 w-full flex-row overflow-hidden">
+		<div className="relative flex h-full min-h-0 w-full flex-col overflow-hidden md:flex-row">
 			{isPending && (
 				<div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/60 backdrop-blur-sm">
 					<div className="relative flex items-center justify-center">
@@ -92,10 +93,43 @@ const ScriptAreaContent = ({
 					<p className="text-sm font-medium text-white">
 						Evaluating your submission…
 					</p>
-					<p className="text-xs text-white/60">Please wait, do not navigate away</p>
+					<p className="text-xs text-white/60">
+						Please wait, do not navigate away
+					</p>
 				</div>
 			)}
-			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
+
+			{/* Mobile tab switcher */}
+			<div className="bg-muted border-accent flex shrink-0 border-b md:hidden">
+				<button
+					type="button"
+					onClick={() => setMobilePanel('code')}
+					className={`flex-1 py-2 text-xs font-medium transition ${
+						mobilePanel === 'code'
+							? 'bg-background text-foreground'
+							: 'text-muted-foreground hover:text-foreground'
+					}`}
+				>
+					Code
+				</button>
+				<button
+					type="button"
+					onClick={() => setMobilePanel('preview')}
+					className={`flex-1 py-2 text-xs font-medium transition ${
+						mobilePanel === 'preview'
+							? 'bg-background text-foreground'
+							: 'text-muted-foreground hover:text-foreground'
+					}`}
+				>
+					Preview
+				</button>
+			</div>
+
+			<div
+				className={`flex min-h-0 flex-col overflow-hidden md:flex md:w-1/2 ${
+					mobilePanel === 'code' ? 'flex h-full w-full' : 'hidden'
+				}`}
+			>
 				<div className="flex min-h-0 flex-3 flex-col">
 					<ScriptAreaHeader title="Code Editor">
 						<Button
@@ -133,7 +167,11 @@ const ScriptAreaContent = ({
 					<SandpackConsole className="border-accent min-h-0 flex-1 overflow-auto border" />
 				</div>
 			</div>
-			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
+			<div
+				className={`flex min-h-0 flex-col overflow-hidden md:flex md:w-1/2 ${
+					mobilePanel === 'preview' ? 'flex h-full w-full' : 'hidden'
+				}`}
+			>
 				<div className="flex min-h-0 flex-1 flex-col">
 					<ScriptAreaHeader title="Live Preview">
 						<Pills previewTab={previewTab} setPreviewTab={setPreviewTab} />
