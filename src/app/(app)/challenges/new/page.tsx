@@ -11,8 +11,8 @@ const NewChallengePage = async () => {
 	}
 
 	return (
-		<main className="bg-background/80 h-full w-full px-64 pt-16 pb-16">
-			<div className="max-w-2xl">
+		<main className="bg-background/80 flex h-full w-full justify-center px-4 pt-16 pb-16">
+			<div className="w-full max-w-2xl">
 				<h1 className="text-foreground mb-8 text-2xl font-semibold">
 					Create a Challenge
 				</h1>
