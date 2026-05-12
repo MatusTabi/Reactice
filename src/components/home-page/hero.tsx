@@ -28,7 +28,7 @@ const Hero = () => (
 				</Button>
 			</Link>
 
-			<Link href="/leaderboard">
+			{/* <Link href="/leaderboard">
 				<Button
 					size="lg"
 					variant="outline"
@@ -36,7 +36,7 @@ const Hero = () => (
 				>
 					Browse Community
 				</Button>
-			</Link>
+			</Link> */}
 		</div>
 	</>
 );
