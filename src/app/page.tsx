@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import Stats from '@/components/home-page/stats';
 import Badges from '@/components/home-page/badges';
 import Hero from '@/components/home-page/hero';
@@ -7,7 +9,9 @@ const HomePage = () => (
 		<div className="relative z-10 flex max-w-5xl flex-col items-center px-6 text-center">
 			<Badges />
 			<Hero />
-			<Stats />
+			<Suspense>
+				<Stats />
+			</Suspense>
 		</div>
 	</section>
 );

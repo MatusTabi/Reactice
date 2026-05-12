@@ -1,6 +1,11 @@
-const getChallengeCount = async () =>
-	// TODO: Change this for actual db call.
-	150;
+import { count } from 'drizzle-orm';
+
+import { challenges, db } from '@/db';
+
+const getChallengeCount = async () => {
+	const [result] = await db.select({ count: count() }).from(challenges);
+	return result?.count ?? 0;
+};
 const Stats = async () => {
 	const count = await getChallengeCount();
 
