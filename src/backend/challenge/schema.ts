@@ -30,7 +30,7 @@ export const createChallengeSchema = z.object({
 	description: z.string().min(1).max(1000),
 	difficulty: difficultySchema,
 	category: z.string().min(1).max(50),
-	referenceImageUrl: z.string().url().nullish(),
+	referenceImageUrl: z.string().url(),
 	files: z.array(challengeFileInputSchema).min(1)
 });
 

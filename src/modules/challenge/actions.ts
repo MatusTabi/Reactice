@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 
 import { getUserServerCtx } from '@/app/server/user-server-ctx';
+import { uploadChallengeImage } from '@/backend/blob/upload';
 import { challengeMutations } from '@/backend/challenge/mutations';
 import {
 	type CreateChallengeType,
@@ -34,6 +35,26 @@ export const updateChallengeAction = async (input: UpdateChallengeType) => {
 	revalidatePath(`/challenges/${input.id}`);
 
 	return challenge;
+};
+
+// Accepts a FormData with a single 'file' field (File, max 2 MB).
+// Returns the public Blob URL to store as referenceImageUrl.
+export const uploadChallengeImageAction = async (
+	formData: FormData
+): Promise<string> => {
+	const { loggedInUser } = await getUserServerCtx();
+
+	if (!loggedInUser) {
+		throw new Error('You must be logged in to upload an image');
+	}
+
+	const file = formData.get('file');
+
+	if (!(file instanceof File) || file.size === 0) {
+		throw new Error('No file provided');
+	}
+
+	return uploadChallengeImage(file);
 };
 
 export const deleteChallengeAction = async (id: string) => {

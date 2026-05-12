@@ -17,8 +17,12 @@ export const authConfig = {
 			const isLoggedIn = !!auth?.user;
 			const isAuthRoute = pathname === '/sign-in' || pathname === '/sign-up';
 			const isAuthApiRoute = pathname.startsWith('/api/auth');
+			const isPublicRoute =
+				pathname === '/' ||
+				pathname === '/catalog' ||
+				pathname === '/leaderboard';
 
-			if (isAuthApiRoute || isAuthRoute) {
+			if (isAuthApiRoute || isAuthRoute || isPublicRoute) {
 				return true;
 			}
 

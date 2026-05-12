@@ -28,7 +28,17 @@ const Hero = () => (
 				</Button>
 			</Link>
 
-			{/* <Link href="/leaderboard">
+			<Link href="/challenges/new">
+				<Button
+					size="lg"
+					variant="outline"
+					className="hover:bg-muted/50 border-foreground/10 h-12 w-full cursor-pointer px-10 text-base font-bold transition-all active:scale-[0.98] sm:w-auto"
+				>
+					Create Challenge
+				</Button>
+			</Link>
+
+			<Link href="/leaderboard">
 				<Button
 					size="lg"
 					variant="outline"
@@ -36,7 +46,7 @@ const Hero = () => (
 				>
 					Browse Community
 				</Button>
-			</Link> */}
+			</Link>
 		</div>
 	</>
 );

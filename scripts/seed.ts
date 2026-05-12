@@ -48,6 +48,7 @@ type ChallengeSeed = {
 	description: string;
 	difficulty: 'easy' | 'medium' | 'hard';
 	category: string;
+	referenceImageUrl: string;
 	files: Array<{ name: string; content: string }>;
 };
 
@@ -58,6 +59,8 @@ const CHALLENGE_SEEDS: ChallengeSeed[] = [
 			'Render three buttons side by side: a primary (blue) button, a secondary (outlined) button, and a destructive (red) button. Use Tailwind utility classes.',
 		difficulty: 'easy',
 		category: 'Buttons',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/button_variants.png',
 		files: [
 			{
 				name: '/App.tsx',
@@ -86,6 +89,8 @@ const CHALLENGE_SEEDS: ChallengeSeed[] = [
 			'Build a counter with three controls: increment, decrement, and reset. The current value is displayed prominently in the center. Use the useState hook.',
 		difficulty: 'easy',
 		category: 'UI',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/click_counter.png',
 		files: [
 			{
 				name: '/App.tsx',
@@ -130,6 +135,8 @@ export default function App() {
 			'Build a centered profile card with an avatar image, name, role, short bio, and a Follow button. Card should have a subtle border, rounded corners, and shadow.',
 		difficulty: 'medium',
 		category: 'Cards',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/profile_card.png',
 		files: [
 			{
 				name: '/App.tsx',
@@ -164,6 +171,8 @@ export default function App() {
 			'Build a horizontal navbar with a logo on the left and four links on the right (Home, About, Projects, Contact). Clicking a link sets it as active — the active link is visually distinct (e.g. bold + lighter color).',
 		difficulty: 'medium',
 		category: 'Navigation',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/navbar_with_active_link.png',
 		files: [
 			{
 				name: '/App.tsx',
@@ -206,15 +215,15 @@ export default function App() {
 			'Build a todo list app with an input + Add button, and a list below. Each item has a clickable label (toggles done state with strikethrough) and a Remove button. Enter key in the input also adds. Empty inputs should be ignored.',
 		difficulty: 'hard',
 		category: 'UI',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/todo_list.png',
 		files: [
 			{
 				name: '/App.tsx',
 				content: `import { useState } from 'react';
 
-type Todo = { id: number; text: string; done: boolean };
-
 export default function App() {
-	const [todos, setTodos] = useState<Todo[]>([]);
+	const [todos, setTodos] = useState([]);
 	const [input, setInput] = useState('');
 
 	const add = () => {
@@ -224,10 +233,10 @@ export default function App() {
 		setInput('');
 	};
 
-	const toggle = (id: number) =>
+	const toggle = (id) =>
 		setTodos(prev => prev.map(t => (t.id === id ? { ...t, done: !t.done } : t)));
 
-	const remove = (id: number) =>
+	const remove = (id) =>
 		setTodos(prev => prev.filter(t => t.id !== id));
 
 	return (
@@ -286,17 +295,19 @@ export default function App() {
 			'Build a centered login form with email and password inputs and a submit button. On submit, validate: email must contain "@", password must be at least 8 characters. Display the first validation error above the inputs in a red banner.',
 		difficulty: 'hard',
 		category: 'Forms',
+		referenceImageUrl:
+			'https://md2pri0fu0gvoj0z.public.blob.vercel-storage.com/challenges/seed/login_form.png',
 		files: [
 			{
 				name: '/App.tsx',
-				content: `import { useState, type FormEvent } from 'react';
+				content: `import { useState } from 'react';
 
 export default function App() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 
-	const handleSubmit = (e: FormEvent) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!email.includes('@')) {
 			setError('Enter a valid email address.');
@@ -526,7 +537,7 @@ const main = async () => {
 				difficulty: seed.difficulty,
 				category: seed.category,
 				creatorId: SEED_USER_IDS.creator,
-				referenceImageUrl: null
+				referenceImageUrl: seed.referenceImageUrl
 			})
 			.returning({ id: challenges.id });
 
