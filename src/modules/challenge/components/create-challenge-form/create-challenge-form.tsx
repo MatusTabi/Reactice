@@ -73,17 +73,20 @@ export const CreateChallengeForm = () => {
 	};
 
 	const onSubmit = async (values: FormValues) => {
-		let referenceImageUrl: string | null = null;
+		if (!imageFile) {
+			setImageError('Preview image is required');
+			return;
+		}
 
-		if (imageFile) {
-			try {
-				const formData = new FormData();
-				formData.append('file', imageFile);
-				referenceImageUrl = await uploadChallengeImageAction(formData);
-			} catch (err) {
-				toast.error(err instanceof Error ? err.message : 'Image upload failed');
-				return;
-			}
+		let referenceImageUrl: string;
+
+		try {
+			const formData = new FormData();
+			formData.append('file', imageFile);
+			referenceImageUrl = await uploadChallengeImageAction(formData);
+		} catch (err) {
+			toast.error(err instanceof Error ? err.message : 'Image upload failed');
+			return;
 		}
 
 		mutation.mutate(
@@ -199,7 +202,7 @@ export const CreateChallengeForm = () => {
 						htmlFor="imageFile"
 						className="text-sm font-medium text-gray-700"
 					>
-						Preview image (optional, max 2 MB)
+						Preview image (max 2 MB)
 					</label>
 					<input
 						id="imageFile"
