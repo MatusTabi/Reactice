@@ -14,7 +14,7 @@ const PublicProfileContent = async ({ id }: { id: string }) => {
 	return (
 		<main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-6">
 			<h1 className="text-2xl font-semibold">Profile</h1>
-			<div className="rounded-lg border bg-white p-4">
+			<div className="rounded-lg border bg-background p-4">
 				<div className="flex items-center gap-4">
 					<div className="bg-muted border-foreground/10 relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border">
 						{profile.image ? (
@@ -39,7 +39,7 @@ const PublicProfileContent = async ({ id }: { id: string }) => {
 					</div>
 				</div>
 			</div>
-			<div className="rounded-lg border bg-white p-4">
+			<div className="rounded-lg border bg-background p-4">
 				<h2 className="mb-3 text-base font-semibold">Stats</h2>
 				<div className="flex gap-6">
 					<div className="flex flex-col">

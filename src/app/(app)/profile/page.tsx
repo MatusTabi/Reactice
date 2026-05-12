@@ -21,7 +21,7 @@ const ProfileContent = async () => {
 				<h1 className="text-2xl font-semibold">Profile</h1>
 				<SignOutButton />
 			</div>
-			<div className="rounded-lg border bg-white p-4">
+			<div className="rounded-lg border bg-background p-4">
 				<p>
 					<span className="font-medium">User #</span>
 					{session.user.seqId}
