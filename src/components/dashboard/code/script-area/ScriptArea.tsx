@@ -18,7 +18,7 @@ import {
 	type ChallengeDetailType,
 	type ChallengeFileType
 } from '@/backend/challenge/schema';
-import { useEvaluateMutation } from '@/modules/ai/hooks/api';
+import { useSubmitMutation } from '@/modules/ai/hooks/api';
 import { useEvaluationResult } from '@/modules/ai/context/evaluation-result-context';
 
 import ScriptAreaHeader from './ScriptAreaHeader';
@@ -37,7 +37,7 @@ const ScriptAreaContent = ({
 	const { sandpack } = useSandpack();
 	const [previewTab, setPreviewTab] = useState<'live' | 'target'>('live');
 	const [mobilePanel, setMobilePanel] = useState<'code' | 'preview'>('code');
-	const { mutate, isPending } = useEvaluateMutation();
+	const { mutate, isPending } = useSubmitMutation();
 	const router = useRouter();
 	const { setResult } = useEvaluationResult();
 
@@ -63,15 +63,12 @@ const ScriptAreaContent = ({
 
 		mutate(
 			{
-				userCode: activeCode,
-				referenceFiles: referenceFiles.map(file => ({
-					name: file.name,
-					content: file.content
-				}))
+				challengeId: challengeId ?? '',
+				submittedCode: activeCode
 			},
 			{
 				onSuccess: data => {
-					setResult(data);
+					setResult(data.evaluation);
 					router.push(`${challengeId}/result`);
 				},
 				onError: () => {
@@ -160,7 +157,13 @@ const ScriptAreaContent = ({
 							)}
 						</Button>
 					</ScriptAreaHeader>
-					<SandpackCodeEditor className="border-accent min-h-0 flex-1 overflow-auto border" />
+					<SandpackCodeEditor
+						showLineNumbers
+						showInlineErrors
+						wrapContent
+						className="border-accent min-h-0 flex-1 overflow-auto border"
+						style={{ fontFamily: 'var(--font-mono)' }}
+					/>
 				</div>
 				<div className="flex min-h-0 flex-1 flex-col">
 					<ScriptAreaHeader title="Console" />
