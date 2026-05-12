@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { leaderboardQueries } from '@/backend/leaderboard/queries';
 import { getUserServerCtx } from '@/app/server/user-server-ctx';
 import PersonalRank from '@/components/leaderboard/personal-rank';
@@ -5,7 +7,7 @@ import Podium from '@/components/leaderboard/podium';
 import UserRanks from '@/components/leaderboard/user-ranks';
 import { cn } from '@/lib/cn';
 
-const LeaderboardPage = async () => {
+const LeaderboardContent = async () => {
 	const { loggedInUser } = await getUserServerCtx();
 	const userId = loggedInUser?.id;
 
@@ -56,5 +58,11 @@ const LeaderboardPage = async () => {
 		</div>
 	);
 };
+
+const LeaderboardPage = () => (
+	<Suspense>
+		<LeaderboardContent />
+	</Suspense>
+);
 
 export default LeaderboardPage;
