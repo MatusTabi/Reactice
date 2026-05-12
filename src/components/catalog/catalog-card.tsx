@@ -22,11 +22,7 @@ const CatalogCard = ({
 }: CatalogCardProps) => (
 	<div className="bg-card relative flex h-108 justify-center rounded-lg border border-[#3d494d]">
 		<div className="flex w-full flex-col">
-			{referenceUrl ? (
-				<CardComponentPreview className="h-1/2" referenceUrl={referenceUrl} />
-			) : (
-				<div className="h-1/2 w-full rounded-tl-lg rounded-tr-lg" />
-			)}
+			<CardComponentPreview className="h-1/2" referenceUrl={referenceUrl} />
 			<CardComponentOverview
 				className="h-1/2"
 				title={title}
