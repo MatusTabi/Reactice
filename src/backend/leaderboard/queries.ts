@@ -1,8 +1,11 @@
-import { countDistinct, desc, eq, sum } from 'drizzle-orm';
+import { countDistinct, desc, eq, ne, sum } from 'drizzle-orm';
 
 import { db, submissions, users } from '@/db';
 
 import { leaderboardEntrySchema, type LeaderboardEntryType } from './schema';
+
+// Fixed UUID of the seed creator bot — excluded from the leaderboard.
+const SEED_BOT_ID = '00000000-0000-4000-8000-000000000001';
 
 // Runs the aggregation and assigns 1-based ranks by position.
 // Pass limit to cap results; omit for the full ranked list.
@@ -18,6 +21,7 @@ const getRanked = async (limit?: number): Promise<LeaderboardEntryType[]> => {
 		})
 		.from(users)
 		.leftJoin(submissions, eq(submissions.userId, users.id))
+		.where(ne(users.id, SEED_BOT_ID))
 		.groupBy(users.id)
 		.orderBy(desc(sum(submissions.pointsAwarded)));
 
