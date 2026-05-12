@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 
 import { auth } from '@/auth';
 import SignOutButton from '@/components/auth/sign-out-button';
+import PageLoader from '@/components/ui/page-loader';
 
-const ProfilePage = async () => {
+const ProfileContent = async () => {
 	const session = await auth();
 
 	if (!session?.user) {
@@ -33,5 +35,11 @@ const ProfilePage = async () => {
 		</main>
 	);
 };
+
+const ProfilePage = () => (
+	<Suspense fallback={<PageLoader />}>
+		<ProfileContent />
+	</Suspense>
+);
 
 export default ProfilePage;

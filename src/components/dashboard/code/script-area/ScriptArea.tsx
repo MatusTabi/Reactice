@@ -7,7 +7,7 @@ import {
 	SandpackProvider,
 	useSandpack
 } from '@codesandbox/sandpack-react';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -44,6 +44,17 @@ const ScriptAreaContent = ({
 	const activeCode = sandpack.files[activeFile]?.code ?? '';
 	const canSubmit = referenceFiles.length > 0 && activeCode.trim().length > 0;
 
+	useEffect(() => {
+		if (!isPending) return;
+
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			e.preventDefault();
+		};
+
+		window.addEventListener('beforeunload', handleBeforeUnload);
+		return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+	}, [isPending]);
+
 	const handleSubmit = () => {
 		if (!canSubmit || isPending) {
 			return;
@@ -70,7 +81,20 @@ const ScriptAreaContent = ({
 	};
 
 	return (
-		<div className="flex h-full min-h-0 w-full flex-row overflow-hidden">
+		<div className="relative flex h-full min-h-0 w-full flex-row overflow-hidden">
+			{isPending && (
+				<div className="absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/60 backdrop-blur-sm">
+					<div className="relative flex items-center justify-center">
+						<div className="border-primary/30 h-16 w-16 rounded-full border-4" />
+						<div className="border-primary absolute h-16 w-16 animate-spin rounded-full border-4 border-t-transparent" />
+						<div className="bg-primary absolute h-3 w-3 animate-pulse rounded-full" />
+					</div>
+					<p className="text-sm font-medium text-white">
+						Evaluating your submission…
+					</p>
+					<p className="text-xs text-white/60">Please wait, do not navigate away</p>
+				</div>
+			)}
 			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
 				<div className="flex min-h-0 flex-3 flex-col">
 					<ScriptAreaHeader title="Code Editor">
