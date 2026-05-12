@@ -1,6 +1,7 @@
 'use client';
 
-import { ChevronDown, ListFilter } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+
 import { Button } from '../ui/button';
 import {
 	DropdownMenu,
@@ -20,7 +21,6 @@ type FilterDropdownProps = {
 
 const FilterDropdown = ({
 	title,
-	value,
 	onChange,
 	content,
 	preIcon

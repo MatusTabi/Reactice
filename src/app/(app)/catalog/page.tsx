@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+
 import { challengeQueries } from '@/backend/challenge/queries';
 import Catalog from '@/components/catalog/catalog';
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import type { ChallengeDetailType } from '@/backend/challenge/schema';
 import CatalogCard from '@/components/catalog/catalog-card';
 import { Button } from '@/components/ui/button';

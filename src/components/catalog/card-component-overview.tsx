@@ -1,9 +1,10 @@
-import ComponentTitle from './component-title';
-import ComponentRating from './component-rating';
+import { ArrowRight } from 'lucide-react';
+
 import { cn } from '@/lib/cn';
+
+import ComponentTitle from './component-title';
 import ComponentDescription from './component-description';
 import CreatedBy from './component-created-by';
-import { ArrowRight } from 'lucide-react';
 
 type CardComponentOverviewProps = {
 	title: string;
@@ -17,7 +18,6 @@ const CardComponentOverview = ({
 	title,
 	description,
 	creatorName,
-	rating,
 	className
 }: CardComponentOverviewProps) => (
 	<div className={cn('flex flex-col justify-center px-8 py-2', className)}>

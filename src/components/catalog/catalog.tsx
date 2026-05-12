@@ -1,12 +1,15 @@
 'use client';
 
-import { ChallengeDetailType } from '@/backend/challenge/schema';
-import { Button } from '../ui/button';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
+
+import { type ChallengeDetailType } from '@/backend/challenge/schema';
+
+import { Button } from '../ui/button';
+
 import SearchComponentsBar from './search-bar';
 import FilterDropdown from './filter-dropdown';
 import CatalogGrid from './catalog-grid';
-import { useState } from 'react';
 
 type CatalogProps = {
 	challenges: ChallengeDetailType[];
