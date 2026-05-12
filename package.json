@@ -13,6 +13,8 @@
 		"db:seed": "tsx --env-file=.env.local scripts/seed.ts"
 	},
 	"dependencies": {
+		"@codesandbox/sandpack-react": "^2.20.0",
+		"@codesandbox/sandpack-themes": "^2.0.21",
 		"@auth/drizzle-adapter": "^1.11.2",
 		"@hookform/resolvers": "^3.9.0",
 		"@libsql/client": "^0.17.3",

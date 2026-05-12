@@ -9,7 +9,7 @@ import CreatedBy from './component-created-by';
 type CardComponentOverviewProps = {
 	title: string;
 	description: string;
-	creatorName: string;
+	creatorName?: string;
 	rating?: number;
 	className?: string;
 };

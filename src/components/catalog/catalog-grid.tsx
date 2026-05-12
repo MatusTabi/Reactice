@@ -22,14 +22,7 @@ const CatalogGrid = ({ challenges, pageSize = 6 }: CatalogGridProps) => {
 		<>
 			<section className="grid grid-cols-3 items-stretch gap-8">
 				{visibleChallenges.map(challenge => (
-					<CatalogCard
-						key={challenge.id}
-						title={challenge.title}
-						description={challenge.description}
-						referenceUrl={challenge.referenceImageUrl ?? undefined}
-						creatorName={challenge.creator.name ?? 'Unknown'}
-						difficulty={challenge.difficulty}
-					/>
+					<CatalogCard key={challenge.id} challenge={challenge} />
 				))}
 			</section>
 			{canLoadMore ? (
