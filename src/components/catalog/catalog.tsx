@@ -1,6 +1,7 @@
 'use client';
 
 import { Plus } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { type ChallengeDetailType } from '@/backend/challenge/schema';
@@ -47,9 +48,11 @@ const Catalog = ({ challenges }: CatalogProps) => {
 						<p className="text-foreground/80 text-lg">No components found.</p>
 					</div>
 					<div className="flex justify-end">
-						<Button className="p-2">
-							<Plus className="h-4 w-4" />
-							Create Your Own
+						<Button asChild className="p-2">
+							<Link href="/challenges/new">
+								<Plus className="h-4 w-4" />
+								Create Your Own
+							</Link>
 						</Button>
 					</div>
 				</>
@@ -75,9 +78,11 @@ const Catalog = ({ challenges }: CatalogProps) => {
 								value={difficultyFilter}
 								onChange={setDifficultyFilter}
 							/>
-							<Button className="ml-4 h-10 p-2">
-								<Plus className="h-4 w-4" />
-								Create Your Own
+							<Button asChild className="ml-4 h-10 p-2">
+								<Link href="/challenges/new">
+									<Plus className="h-4 w-4" />
+									Create Your Own
+								</Link>
 							</Button>
 						</div>
 					</section>
