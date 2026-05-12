@@ -5,8 +5,9 @@ import { SessionProvider } from 'next-auth/react';
 import { type PropsWithChildren, useState } from 'react';
 import { Toaster } from 'sonner';
 
-import { ThemeProvider } from './theme-provider';
 import { EvaluationResultProvider } from '@/modules/ai/context/evaluation-result-context';
+
+import { ThemeProvider } from './theme-provider';
 
 export const Providers = ({ children }: PropsWithChildren) => {
 	const [queryClient] = useState(

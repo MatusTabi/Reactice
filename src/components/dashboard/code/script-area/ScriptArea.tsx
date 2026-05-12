@@ -8,18 +8,20 @@ import {
 	useSandpack
 } from '@codesandbox/sandpack-react';
 import { Suspense, useState } from 'react';
-import ScriptAreaHeader from './ScriptAreaHeader';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/ui/button';
 import Pills from '@/components/ui/pills';
-import { useTheme } from 'next-themes';
 import {
 	type ChallengeDetailType,
 	type ChallengeFileType
 } from '@/backend/challenge/schema';
-import Image from 'next/image';
 import { useEvaluateMutation } from '@/modules/ai/hooks/api';
-import { useRouter } from 'next/navigation';
 import { useEvaluationResult } from '@/modules/ai/context/evaluation-result-context';
+
+import ScriptAreaHeader from './ScriptAreaHeader';
 
 type ScriptAreaContentProps = {
 	challengeId?: string;

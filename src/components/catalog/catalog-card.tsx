@@ -1,9 +1,11 @@
 import Link from 'next/link';
+
+import { type ChallengeDetailType } from '@/backend/challenge/schema';
+
 import CardComponentOverview from './card-component-overview';
 import CardComponentPreview from './card-component-preview';
 import CategoryTag from './category-tag';
 import DifficultyTag from './difficulty-tag';
-import { ChallengeDetailType } from '@/backend/challenge/schema';
 
 type CatalogCardProps = {
 	challenge: ChallengeDetailType;

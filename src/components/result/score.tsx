@@ -4,11 +4,11 @@ type DonutScoreProps = {
 	strokeWidth?: number;
 };
 
-export default function DonutScore({
+const DonutScore = ({
 	score,
 	size = 140,
 	strokeWidth = 12
-}: DonutScoreProps) {
+}: DonutScoreProps) => {
 	const radius = (size - strokeWidth) / 2;
 	const circumference = radius * 2 * Math.PI;
 
@@ -54,4 +54,6 @@ export default function DonutScore({
 			</div>
 		</div>
 	);
-}
+};
+
+export default DonutScore;

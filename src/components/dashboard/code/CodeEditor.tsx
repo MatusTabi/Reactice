@@ -1,4 +1,5 @@
-import { ChallengeDetailType } from '@/backend/challenge/schema';
+import { type ChallengeDetailType } from '@/backend/challenge/schema';
+
 import ScriptArea from './script-area/ScriptArea';
 
 type CodeEditorProps = {
