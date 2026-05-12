@@ -1,4 +1,5 @@
 import { Crown } from 'lucide-react';
+import Link from 'next/link';
 
 import { type LeaderboardEntryType } from '@/backend/leaderboard/schema';
 
@@ -13,7 +14,10 @@ const Podium = ({ users }: PodiumProps) => {
 
 	return (
 		<div className="grid w-full max-w-2xl grid-cols-3 items-end gap-x-2 sm:gap-x-6">
-			<div className="flex flex-col items-center gap-y-3 pb-2">
+			<Link
+				href={`/app/profile/${second?.id}`}
+				className="flex flex-col items-center gap-y-3 pb-2 transition-opacity hover:opacity-80"
+			>
 				<PodiumCircle rank={2} avatar={second?.image} />
 
 				<div className="w-full text-center">
@@ -27,9 +31,12 @@ const Podium = ({ users }: PodiumProps) => {
 						<span>{second?.totalPoints.toLocaleString() ?? '0'} XP</span>
 					</span>
 				</div>
-			</div>
+			</Link>
 
-			<div className="flex flex-col items-center gap-y-4">
+			<Link
+				href={`/app/profile/${first?.id}`}
+				className="flex flex-col items-center gap-y-4 transition-opacity hover:opacity-80"
+			>
 				<div className="relative">
 					<div className="absolute -top-10 left-1/2 z-10 -translate-x-1/2 sm:-top-12">
 						<Crown className="text-primary fill-primary/10 h-10 w-10 drop-shadow-[0_0_10px_rgba(var(--primary),0.5)] sm:h-12 sm:w-12" />
@@ -49,9 +56,12 @@ const Podium = ({ users }: PodiumProps) => {
 						<span>{first?.totalPoints.toLocaleString() ?? '0'} XP</span>
 					</div>
 				</div>
-			</div>
+			</Link>
 
-			<div className="flex flex-col items-center gap-y-3 pb-2">
+			<Link
+				href={`/app/profile/${third?.id}`}
+				className="flex flex-col items-center gap-y-3 pb-2 transition-opacity hover:opacity-80"
+			>
 				<PodiumCircle rank={3} avatar={third?.image} />
 				<div className="w-full text-center">
 					<p className="truncate px-1 text-sm font-bold">
@@ -64,7 +74,7 @@ const Podium = ({ users }: PodiumProps) => {
 						<span>{third?.totalPoints.toLocaleString() ?? '0'} XP</span>
 					</span>
 				</div>
-			</div>
+			</Link>
 		</div>
 	);
 };

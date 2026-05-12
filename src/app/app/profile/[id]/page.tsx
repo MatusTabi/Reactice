@@ -1,35 +1,26 @@
 import { Suspense } from 'react';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { User as UserIcon } from 'lucide-react';
 
-import { auth } from '@/auth';
-import SignOutButton from '@/components/auth/sign-out-button';
-import PageLoader from '@/components/ui/page-loader';
 import { leaderboardQueries } from '@/backend/leaderboard/queries';
+import PageLoader from '@/components/ui/page-loader';
 
-const AppProfileContent = async () => {
-	const session = await auth();
+const PublicProfileContent = async ({ id }: { id: string }) => {
+	const profile = await leaderboardQueries.getPublicProfile(id);
 
-	if (!session?.user) {
-		redirect('/sign-in');
-	}
-
-	const stats = await leaderboardQueries.getUserRank(session.user.id!);
+	if (!profile) notFound();
 
 	return (
 		<main className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-6">
-			<div className="flex items-center justify-between gap-3">
-				<h1 className="text-2xl font-semibold">Profile</h1>
-				<SignOutButton />
-			</div>
-			<div className="bg-background rounded-lg border p-4">
-				<div className="mb-4 flex items-center gap-4">
+			<h1 className="text-2xl font-semibold">Profile</h1>
+			<div className="rounded-lg border bg-white p-4">
+				<div className="flex items-center gap-4">
 					<div className="bg-muted border-foreground/10 relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border">
-						{session.user.image ? (
+						{profile.image ? (
 							<Image
-								src={session.user.image}
-								alt={session.user.name ?? 'Avatar'}
+								src={profile.image}
+								alt={profile.name ?? 'User'}
 								fill
 								className="object-cover"
 								sizes="64px"
@@ -39,25 +30,24 @@ const AppProfileContent = async () => {
 						)}
 					</div>
 					<div>
-						<p className="text-lg font-bold">{session.user.name ?? 'N/A'}</p>
-						<p className="text-muted-foreground text-sm">
-							{session.user.email ?? 'N/A'}
-						</p>
-						{session.user.seqId && (
+						<p className="text-lg font-bold">{profile.name ?? 'Anonymous'}</p>
+						{profile.seqId && (
 							<p className="text-muted-foreground text-sm">
-								User #{session.user.seqId}
+								User #{profile.seqId}
 							</p>
 						)}
 					</div>
 				</div>
-				<hr className="my-3" />
+			</div>
+			<div className="rounded-lg border bg-white p-4">
+				<h2 className="mb-3 text-base font-semibold">Stats</h2>
 				<div className="flex gap-6">
 					<div className="flex flex-col">
 						<span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
 							Score
 						</span>
 						<span className="text-primary text-2xl font-black">
-							{stats ? stats.totalPoints.toLocaleString() : 0}
+							{profile.totalPoints.toLocaleString()}
 							<span className="text-muted-foreground ml-1 text-sm font-bold">
 								XP
 							</span>
@@ -67,17 +57,13 @@ const AppProfileContent = async () => {
 						<span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
 							Rank
 						</span>
-						<span className="text-2xl font-black">
-							{stats ? `#${stats.rank}` : '—'}
-						</span>
+						<span className="text-2xl font-black">#{profile.rank}</span>
 					</div>
 					<div className="flex flex-col">
 						<span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
 							Completed
 						</span>
-						<span className="text-2xl font-black">
-							{stats ? stats.completed : 0}
-						</span>
+						<span className="text-2xl font-black">{profile.completed}</span>
 					</div>
 				</div>
 			</div>
@@ -85,10 +71,18 @@ const AppProfileContent = async () => {
 	);
 };
 
-const AppProfilePage = () => (
-	<Suspense fallback={<PageLoader />}>
-		<AppProfileContent />
-	</Suspense>
-);
+const PublicProfilePage = async ({
+	params
+}: {
+	params: Promise<{ id: string }>;
+}) => {
+	const { id } = await params;
 
-export default AppProfilePage;
+	return (
+		<Suspense fallback={<PageLoader />}>
+			<PublicProfileContent id={id} />
+		</Suspense>
+	);
+};
+
+export default PublicProfilePage;

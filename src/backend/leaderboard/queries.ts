@@ -52,4 +52,28 @@ const getUserRank = async (
 	return all.find(e => e.id === userId) ?? null;
 };
 
-export const leaderboardQueries = { getTop, getUserRank };
+const getPublicProfile = async (
+	userId: string
+): Promise<(LeaderboardEntryType & { seqId: number | null }) | null> => {
+	const [user] = await db
+		.select({ seqId: users.seqId, name: users.name, image: users.image })
+		.from(users)
+		.where(eq(users.id, userId))
+		.limit(1);
+
+	if (!user) return null;
+
+	const stats = await getUserRank(userId);
+
+	return {
+		id: userId,
+		name: user.name,
+		image: user.image,
+		seqId: user.seqId,
+		rank: stats?.rank ?? 0,
+		totalPoints: stats?.totalPoints ?? 0,
+		completed: stats?.completed ?? 0
+	};
+};
+
+export const leaderboardQueries = { getTop, getUserRank, getPublicProfile };

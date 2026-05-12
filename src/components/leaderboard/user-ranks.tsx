@@ -1,5 +1,6 @@
 import { User } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { type LeaderboardEntryType } from '@/backend/leaderboard/schema';
 import { cn } from '@/lib/cn';
@@ -15,7 +16,8 @@ type UserRanksProps = {
 const UserRanks = ({ users }: UserRanksProps) => (
 	<div className="mx-auto flex w-full max-w-2xl flex-col gap-2 pt-8 sm:pt-12">
 		{users.map(user => (
-			<div
+			<Link
+				href={`/app/profile/${user.id}`}
 				key={user.id}
 				className={cn(
 					'border-foreground/5 bg-foreground/2 group flex items-center justify-between rounded-xl border p-3 transition-all sm:p-4',
@@ -71,7 +73,7 @@ const UserRanks = ({ users }: UserRanksProps) => (
 						XP
 					</span>
 				</div>
-			</div>
+			</Link>
 		))}
 	</div>
 );
