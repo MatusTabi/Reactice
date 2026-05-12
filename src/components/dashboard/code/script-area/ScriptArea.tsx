@@ -130,7 +130,7 @@ const ScriptAreaContent = ({
 				<div className="flex min-h-0 flex-3 flex-col">
 					<ScriptAreaHeader title="Code Editor">
 						<Button
-							className="bg-primary text-primary-foreground"
+							className="bg-primary text-primary-foreground cursor-pointer"
 							disabled={!canSubmit || isPending}
 							onClick={handleSubmit}
 						>

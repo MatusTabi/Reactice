@@ -27,7 +27,7 @@ const CatalogGrid = ({ challenges, pageSize = 6 }: CatalogGridProps) => {
 			</section>
 			{canLoadMore ? (
 				<Button
-					className="mx-auto mt-12 flex items-center p-4"
+					className="mx-auto mt-12 flex cursor-pointer items-center p-4"
 					onClick={() => {
 						setVisibleCount(current =>
 							Math.min(current + pageSize, challenges.length)
