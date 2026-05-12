@@ -7,7 +7,7 @@ import { Trophy, LayoutGrid } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 const links = [
-	{ href: '/challenges', label: 'Challenges', icon: LayoutGrid },
+	{ href: '/catalog', label: 'Challenges', icon: LayoutGrid },
 	{ href: '/leaderboard', label: 'Leaderboard', icon: Trophy }
 ] as const;
 
