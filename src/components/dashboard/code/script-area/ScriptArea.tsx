@@ -7,28 +7,17 @@ import {
 	SandpackProvider,
 	useSandpack
 } from '@codesandbox/sandpack-react';
-import { dracula } from '@codesandbox/sandpack-themes';
 import { Suspense, useEffect, useState } from 'react';
 import ScriptAreaHeader from './ScriptAreaHeader';
 import { useDebouncedValue } from '@/hooks/use-debounced-value';
-import { useEvaluateMutation } from '@/modules/ai/hooks/api';
 import { Button } from '@/components/ui/button';
-import { Pill } from 'lucide-react';
 import Pills from '@/components/ui/pills';
-
-const draculaThemeWithCustomBackground = {
-	...dracula,
-	colors: {
-		...dracula.colors,
-		surface1: '#10141a'
-	}
-};
+import { useTheme } from 'next-themes';
 
 const EVALUATION_DEBOUNCE_MS = 600;
 
 const ScriptAreaContent = () => {
 	const { sandpack } = useSandpack();
-	const { mutate } = useEvaluateMutation();
 	const [previewTab, setPreviewTab] = useState<'live' | 'target'>('live');
 
 	const activeFile = sandpack.activeFile;
@@ -39,16 +28,14 @@ const ScriptAreaContent = () => {
 		if (!debouncedCode.trim()) {
 			return;
 		}
-
-		mutate({ userCode: debouncedCode });
-	}, [debouncedCode, mutate]);
+	}, [debouncedCode]);
 
 	return (
 		<div className="flex h-full min-h-0 w-full flex-row overflow-hidden">
 			<div className="flex h-full min-h-0 w-1/2 flex-col overflow-hidden">
 				<div className="flex min-h-0 flex-3 flex-col">
 					<ScriptAreaHeader title="Code Editor">
-						<Button className="bg-[#3FB950] text-black hover:bg-[#3FB950]/90">
+						<Button className="bg-primary text-primary-foreground">
 							Submit
 						</Button>
 					</ScriptAreaHeader>
@@ -92,30 +79,34 @@ const ScriptAreaContent = () => {
 	);
 };
 
-const ScriptArea = () => (
-	<div className="flex h-full min-h-0 w-full flex-1 flex-col border">
-		<Suspense>
-			<SandpackProvider
-				style={{ height: '100%', border: '1px solid #3d494d' }}
-				template="react-ts"
-				files={{
-					'/App.tsx': `export default function App() {
+const ScriptArea = () => {
+	const { theme } = useTheme();
+
+	return (
+		<div className="flex h-full min-h-0 w-full flex-1 flex-col border">
+			<Suspense>
+				<SandpackProvider
+					style={{ height: '100%', border: '1px solid #3d494d' }}
+					template="react-ts"
+					files={{
+						'/App.tsx': `export default function App() {
 	return <main className="bg-[#262a31] h-screen w-screen">
 		<h1 className="text-2xl font-bold text-white">
 			Hello, Sandpack!
 		</h1>
 	</main>;
 }`
-				}}
-				theme={draculaThemeWithCustomBackground}
-				options={{
-					externalResources: ['https://cdn.tailwindcss.com']
-				}}
-			>
-				<ScriptAreaContent />
-			</SandpackProvider>
-		</Suspense>
-	</div>
-);
+					}}
+					theme={theme === 'dark' ? 'dark' : 'light'}
+					options={{
+						externalResources: ['https://cdn.tailwindcss.com']
+					}}
+				>
+					<ScriptAreaContent />
+				</SandpackProvider>
+			</Suspense>
+		</div>
+	);
+};
 
 export default ScriptArea;
